@@ -1,0 +1,6 @@
+.drawer-body {
+  display: flex;
+  width: 300px;
+  height: 100%;
+  flex-flow: column;
+  overflow-y: auto; }

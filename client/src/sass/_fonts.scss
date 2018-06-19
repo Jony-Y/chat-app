@@ -1,0 +1,555 @@
+/* FONTS - START */
+.f-s-100 {
+  font-size: 100%;
+}
+
+.f-s-90 {
+  font-size: 90%;
+}
+
+
+.font-l-base {
+  font-family: $font, sans-serif;
+  font-weight: 300;
+  font-stretch: normal;
+}
+
+.font-m-base {
+  font-family: $font, sans-serif;
+  font-weight: 500;
+  font-stretch: normal;
+  letter-spacing: normal;
+}
+.font-b-base {
+  font-family: $font, sans-serif;
+  font-stretch: normal;
+  font-weight: bold;
+}
+
+.font-p-l-base {
+  font-family: Poppins, sans-serif !important;
+  font-weight: 300;
+  letter-spacing: .5pt !important;
+  font-stretch: normal;
+}
+
+.font-p-reg-base {
+  font-family: Poppins, sans-serif !important;
+  letter-spacing: .5pt !important;
+  font-weight: 300;
+  font-stretch: normal;
+}
+
+.font-p-m-base {
+  font-family: Poppins, sans-serif !important;
+  font-weight: bold;
+  font-stretch: normal;
+  letter-spacing: .5pt !important;
+}
+.font-p-b-base {
+  font-family: Poppins, sans-serif !important;
+  font-stretch: normal;
+  letter-spacing: .5pt !important;
+  font-weight: bolder;
+}
+
+/* Bold*/
+
+.font-b-11 {
+  @extend .font-b-base;
+  font-size: 11px;
+}
+
+.font-b-12 {
+  @extend .font-b-base;
+  font-size: 12px;
+}
+
+.font-b-13 {
+  @extend .font-b-base;
+  font-size: 13px;
+}
+
+.font-b-14 {
+  @extend .font-b-base;
+  font-size: 14px;
+}
+
+.font-b-15 {
+  @extend .font-b-base;
+  font-size: 15px;
+}
+
+.font-b-16 {
+  @extend .font-b-base;
+  font-size: 16px;
+}
+
+.font-b-18 {
+  @extend .font-b-base;
+  font-size: 18px;
+}
+
+.font-b-20 {
+  @extend .font-b-base;
+  font-size: 20px;
+}
+
+.font-b-22 {
+  @extend .font-b-base;
+  font-size: 22px;
+}
+
+.font-c-12 {
+  font-family: "proxima-nova", sans-serif;
+  font-stretch: condensed;
+  font-size: 12px;
+}
+
+.font-b-18 {
+  @extend .font-b-base;
+  font-size: 18px;
+}
+
+.font-b-28 {
+  @extend .font-b-base;
+  font-size: 28px;
+}
+
+.font-b-27 {
+  @extend .font-b-base;
+  font-size: 27px;
+}
+
+.font-b-26 {
+  @extend .font-b-base;
+  font-size: 26px;
+}
+.font-b-24 {
+  @extend .font-b-base;
+  font-size: 24px;
+}
+
+
+.font-b-c-38 {
+  font-family: "proxima-nova", sans-serif;
+  font-stretch: condensed;
+  font-size: 38px;
+}
+.font-b-100 {
+  @extend .font-b-base;
+  font-size: 100px;
+}
+
+.font-b-70 {
+  @extend .font-b-base;
+  font-size: 70px;
+}
+
+.font-b-30 {
+  @extend .font-b-base;
+  font-size: 30px;
+}
+
+.font-b-35 {
+  @extend .font-b-base;
+  font-size: 35px;
+}
+
+.font-b-1 {
+  @extend .font-b-base;
+  font-size: 1vw;
+}
+
+.font-b-1_5 {
+  @extend .font-b-base;
+  font-size: 1.5vw;
+}
+
+.font-b-0_8 {
+  @extend .font-b-base;
+  font-size: 0.8vw;
+}
+
+.font-b-2 {
+  @extend .font-b-base;
+  font-size: 2vw;
+}
+
+.font-b-2_5 {
+  @extend .font-b-base;
+  font-size: 2.5vw;
+}
+
+/*Light*/
+.font-l-25 {
+  @extend .font-l-base;
+  font-size: 25px;
+}
+
+.font-l-28 {
+  @extend .font-l-base;
+  font-size: 28px;
+}
+
+.font-l-68 {
+  @extend .font-l-base;
+  font-size: 68px;
+}
+
+.font-l-50 {
+  @extend .font-l-base;
+  font-size: 50px;
+}
+
+.font-l-56 {
+  @extend .font-l-base;
+  font-size: 56px;
+}
+
+.font-l-22 {
+  @extend .font-l-base;
+  font-size: 22px;
+}
+
+.font-l-16 {
+  @extend .font-l-base;
+  font-size: 16px;
+}
+
+.font-l-17 {
+  @extend .font-l-base;
+  font-size: 17px;
+}
+
+.font-l-18 {
+  @extend .font-l-base;
+  font-size: 18px;
+}
+
+.font-l-19 {
+  @extend .font-l-base;
+  font-size: 19px;
+}
+
+.font-l-11 {
+  @extend .font-l-base;
+  font-size: 11px;
+}
+
+.font-l-12 {
+  @extend .font-l-base;
+  font-size: 12px;
+}
+
+.font-l-14 {
+  @extend .font-l-base;
+  font-size: 14px;
+}
+
+.font-l-20 {
+  @extend .font-l-base;
+  font-size: 20px;
+}
+
+.font-l-23 {
+  @extend .font-l-base;
+  font-size: 23px;
+}
+
+.font-l-25 {
+  @extend .font-l-base;
+  font-size: 25px;
+}
+
+.font-l-24 {
+  @extend .font-l-base;
+  font-size: 24px;
+}
+
+.font-l-35 {
+  @extend .font-l-base;
+  font-size: 35px;
+}
+.font-l-32 {
+  @extend .font-l-base;
+  font-size: 32px;
+}
+
+.font-l-43 {
+  @extend .font-l-base;
+  font-size: 43px;
+}
+
+.font-l-50 {
+  @extend .font-l-base;
+  font-size: 50px;
+}
+
+.font-l-1 {
+  @extend .font-l-base;
+  font-size: 1vw;
+}
+
+.font-l-1_5 {
+  @extend .font-l-base;
+  font-size: 1.5vw;
+}
+
+.font-l-0_8 {
+  @extend .font-l-base;
+  font-size: 0.8vw;
+}
+
+.font-l-2 {
+  @extend .font-l-base;
+  font-size: 2vw;
+}
+
+.font-l-2_5 {
+  @extend .font-l-base;
+  font-size: 2.5vw;
+}
+/*Medium*/
+.font-m-40 {
+  @extend .font-m-base;
+  font-size: 40px;
+}
+.font-m-38 {
+  @extend .font-m-base;
+  font-size: 38px;
+}
+
+.font-m-30 {
+  @extend .font-m-base;
+  font-size: 30px;
+}
+
+.font-m-28 {
+  @extend .font-m-base;
+  font-size: 28px;
+}
+
+.font-m-26 {
+  @extend .font-m-base;
+  font-size: 26px;
+}
+.font-m-24 {
+  @extend .font-m-base;
+  font-size: 24px;
+}
+
+.font-m-22 {
+  @extend .font-m-base;
+  font-size: 22px;
+}
+
+.font-m-21 {
+  @extend .font-m-base;
+  font-size: 21px;
+}
+
+.font-m-20 {
+  @extend .font-m-base;
+  font-size: 20px;
+}
+.font-m-18 {
+  @extend .font-m-base;
+  font-size: 18px;
+}
+.font-m-16 {
+  @extend .font-m-base;
+  font-size: 16px;
+}
+.font-m-15 {
+  @extend .font-m-base;
+  font-size: 15px;
+}
+
+.font-m-14 {
+  @extend .font-m-base;
+  font-size: 14px;
+}
+
+.font-m-12 {
+  @extend .font-m-base;
+  font-size: 12px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.font-m-6 {
+  @extend .font-m-base;
+  font-size: 6px;
+}
+
+.font-m-1 {
+  @extend .font-m-base;
+  font-size: 1vw;
+}
+
+.font-m-1_25 {
+  @extend .font-m-base;
+  font-size: 1.25vw;
+}
+
+.font-m-1_5 {
+  @extend .font-m-base;
+  font-size: 1.5vw;
+}
+
+.font-m-0_9 {
+  @extend .font-m-base;
+  font-size: 0.9vw;
+}
+
+.font-m-0_8 {
+  @extend .font-m-base;
+  font-size: 0.8vw;
+}
+
+.font-m-2 {
+  @extend .font-m-base;
+  font-size: 2vw;
+}
+
+.font-m-2_5 {
+  @extend .font-m-base;
+  font-size: 2.5vw;
+}
+
+.font-p-m-18{
+  @extend .font-p-m-base;
+  font-size: 18pt;
+}
+
+.font-p-m-1_5{
+  @extend .font-p-m-base;
+  font-size: 1.5vw;
+}
+.font-p-m-1_2{
+  @extend .font-p-m-base;
+  font-size: 1.2vw;
+}
+/*Regular*/
+.font-reg-1 {
+  font-size: 1vw;
+}
+
+.font-reg-1_5 {
+  font-size: 1.5vw;
+}
+
+.font-reg-0_8 {
+  font-size: 0.8vw;
+}
+
+.font-reg-2 {
+  font-size: 2vw;
+}
+
+.font-reg-2_5 {
+  font-size: 2.5vw;
+}
+
+.font-reg-56 {
+  font-size: 56px;
+}
+
+.font-reg-22 {
+  font-size: 22px;
+}
+
+.font-reg-23{
+  font-size: 23px;
+}
+.font-reg-24 {
+  font-size: 24px;
+}
+
+.font-reg-25 {
+  font-size: 25px;
+}
+
+.font-reg-28 {
+  font-size: 28px;
+}
+
+.font-reg-30 {
+  font-size: 30px;
+}
+.font-reg-35 {
+  font-size: 35px;
+}
+.font-reg-40 {
+  font-size: 40px;
+}
+
+.font-reg-12 {
+  font-size: 12px;
+}
+
+.font-reg-10 {
+  font-size: 10px;
+}
+
+.font-reg-13 {
+  font-size: 13px;
+}
+
+.font-reg-15 {
+  font-size: 15px;
+}
+
+.font-reg-16 {
+  font-size: 16px;
+}
+
+.font-reg-18 {
+  font-size: 18px;
+}
+.font-b-20 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.font-b-24 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.font-reg-20 {
+  font-size: 20px;
+}
+
+.font-reg-11 {
+  font-size: 11px;
+}
+
+.font-reg-9 {
+  font-size: 9px;
+}
+
+.font-p-reg-18{
+  @extend .font-p-reg-base;
+  font-size: 18pt;
+}
+
+.font-p-reg-1_5{
+  @extend .font-p-reg-base;
+  font-size: 1.5vw;
+}
+
+.font-p-reg-1_2{
+  @extend .font-p-reg-base;
+  font-size: 1.2vw;
+}
+
+
+/* FONTS - END */

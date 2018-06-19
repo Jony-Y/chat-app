@@ -1,0 +1,19 @@
+.base-input {
+  height: 45px;
+  border-radius: 5px;
+  border-style: none;
+  padding-left: 15px; }
+  .base-input:focus {
+    outline: none; }
+
+.base-input.sm {
+  height: 36px; }
+
+.filter-input {
+  border: 1px solid #d8d8d8;
+  background: white;
+  border-radius: 20px;
+  padding-left: 10px;
+  padding-right: 10px; }
+
+/*# sourceMappingURL=input.css.map */

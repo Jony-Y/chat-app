@@ -1,0 +1,46 @@
+@import "../../sass/variables";
+.chat-list{
+  height:100%;
+  flex-flow: column;
+  overflow-y: auto;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 1px 6px, rgba(0, 0, 0, 0.2) 0 1px 4px;
+  border-right: 1px solid $lighter-gray;
+}
+
+.chat-container{
+  background: $blue-gray;
+  width: calc(100% - 300px);
+  .chat-body{
+    width:100%;
+    height:100%;
+    overflow-y: auto;
+    flex-flow: column;
+  }
+}
+
+.chat-bottom-bar{
+  bottom:0;
+  background: $lightest-gray;
+  height:60px;
+  padding-left: 15px;
+  padding-right: 15px;
+
+}
+
+.chat-message{
+  display: flex;
+  flex-flow: column wrap;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 1px 6px, rgba(0, 0, 0, 0.2) 0 1px 4px;
+  border-radius: 10px;
+  padding: 3px 10px;
+  min-width: 100px;
+  width: fit-content;
+  margin:15px 7px;
+  .body{
+    color:$gray;
+  }
+  .date{
+    font-size: 9px;
+    color:$light-gray
+  }
+}

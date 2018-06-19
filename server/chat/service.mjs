@@ -1,0 +1,13 @@
+import Chat from "./model";
+
+export const saveChat = (payload) => {
+    return new Chat(payload).save();
+};
+
+export const getAllChats = () => {
+    return Chat.find().populate('User');
+};
+
+export const getChat = (id) => {
+    return Chat.findOne({_id:id}).populate('User');
+};
