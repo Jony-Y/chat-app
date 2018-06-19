@@ -24,9 +24,7 @@ export const post = async(req, res) => {
  */
 export const getAll = async(req, res) => {
     try{
-        let users =  await getAllUsers();
-        users.forEach((user) => user.set('password',undefined));
-        return res.json(users);
+        return res.json(await getAllUsers());
     }catch(err){
         console.log(err);
     }
@@ -80,7 +78,6 @@ export const signUp = async(req, res) => {
             return res.status(401).json({message:'userUtility already exists', status:401});
         }
         const user = await saveUser(data);
-        user.set('password',undefined);
         user.set('token',generateToken(user.id));
         return res.json(user);
     }catch(err){

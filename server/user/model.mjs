@@ -12,7 +12,8 @@ const userSchema = BaseSchema({
     },
     password:{
         type:String,
-        required:true
+        required:true,
+        select:false
     },
     firstName:String,
     lastName:String
@@ -30,5 +31,6 @@ userSchema.pre('save', function(next) {
         next();
     });
 });
+
 const User = mongoose.model('User', userSchema);
 export default User;

@@ -5,9 +5,9 @@ export const saveChat = (payload) => {
 };
 
 export const getAllChats = () => {
-    return Chat.find().populate('User');
+    return Chat.find().populate('participants');
 };
 
 export const getChat = (id) => {
-    return Chat.findOne({_id:id}).populate('User');
+    return Chat.findOne({_id:id}).populate('participants');
 };

@@ -9,5 +9,5 @@ export const getAllUsers = () => {
 };
 
 export const getUser = (payload) => {
-    return User.findOne(payload);
+    return User.findOne(payload).select('+password');
 };
