@@ -46,6 +46,7 @@ export const login = async(req, res) => {
         if(!user){
             return res.status(401).json({message:'Invalid Email or Password',status:401});
         }
+        console.log(user);
         const isMatch = await bcrypt.compare(password, user.password);
         if(!isMatch){
             return res.status(401).json({message:'Invalid Email or Password',status:401});
@@ -71,13 +72,11 @@ export const signUp = async(req, res) => {
         if(!data.email || !data.password) {
             return res.status(500).json({message:'Invalid fields', status:500});
         }
-        bcrypt.hash(data.password, 10).then(hash => {
-            data.password = hash;
-        });
         if(await getUser({email:data.email})){
-            return res.status(401).json({message:'userUtility already exists', status:401});
+            return res.status(401).json({message:'User already exists', status:401});
         }
         const user = await saveUser(data);
+        user.set('password',undefined);
         user.set('token',generateToken(user.id));
         return res.json(user);
     }catch(err){
