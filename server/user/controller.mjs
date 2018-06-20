@@ -51,8 +51,7 @@ export const login = async(req, res) => {
             return res.status(401).json({message:'Invalid Email or Password',status:401});
         }
         user.set('password',undefined);
-        user.set('token',generateToken(user.id));
-        return res.json(user);
+        return res.json(Object.assign({},user.toObject(), {token: generateToken(user.id)}));
     }catch(err){
         console.log(err);
         return res.status(500).json(err)
@@ -76,8 +75,7 @@ export const signUp = async(req, res) => {
         }
         const user = await saveUser(data);
         user.set('password',undefined);
-        user.set('token',generateToken(user.id));
-        return res.json(user);
+        return res.json(Object.assign({},user.toObject(), {token: generateToken(user.id)}));
     }catch(err){
         console.log(err);
         return res.status(500).json(err)
