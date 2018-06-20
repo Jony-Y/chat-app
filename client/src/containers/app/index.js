@@ -55,7 +55,7 @@ class AppContainer extends Component {
                   <Drawer open={isDrawerOpen} header="Select Users" bodyClass="bg-lightest-gray" onClose={closeDrawer}>
                       <CreateNewChatFormContainer onCreate={this.handleNewChat}/>
                   </Drawer>
-                  <ChatPicker activeChat={activeChat} chats={chats} onClick={this.setActiveChat}/>
+                  <ChatPicker activeChat={activeChat} chats={chats} onSelect={this.setActiveChat}/>
               </div>
               <ChatContainer/>
           </div>
