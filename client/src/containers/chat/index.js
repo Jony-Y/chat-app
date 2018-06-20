@@ -5,23 +5,18 @@ import {bindActionCreators} from 'redux';
 import './chat.css';
 import NewMessageForm from "./NewMessageForm";
 import {chatMessages} from "./selectors";
-import {addMessage} from "./actions";
+import {addMessage, fetchChatHistory} from "./actions";
 import ChatMessage from "./ChatMessage";
 import io from 'socket.io-client';
 import isEmpty from 'lodash/isEmpty';
 
 class ChatContainer extends Component {
-    constructor(props){
-        super(props);
-        this.state = {messages:[]};
-
-    }
 
     componentDidMount(){
+        this.props.fetchChatHistory();
         this.socket = io.connect(process.env.REACT_APP_SOCKET_URL);
         this.socket.on('RECEIVE_MESSAGE', (data) => {
             this.setState({messages:[...this.state.messages,data]});
-
         })
     }
 
@@ -37,8 +32,7 @@ class ChatContainer extends Component {
     };
 
     render(){
-        //const {addMessage, messages} = this.props;
-        const {messages} = this.state;
+        const {addMessage, messages} = this.props;
         return (
             <div className="chat-container flexbox flexbox-column-fill flex-start">
                 <div className="chat-body p-l-15">
@@ -54,13 +48,13 @@ ChatContainer.propTypes = {
     id:PropTypes.string
 };
 
-// const mapStateToProps = (state, props) => {
-//     return {
-//         messages: chatMessages(state, props.id)
-//     }
-// };
-// const mapDispatchToProps = (dispatch) => ({
-//     addMessage : bindActionCreators(addMessage, dispatch)
-// });
-//export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer);
-export default ChatContainer;
+const mapStateToProps = (state, props) => {
+    return {
+        messages: chatMessages(state, props.id)
+    }
+};
+const mapDispatchToProps = (dispatch) => ({
+    addMessage : bindActionCreators(addMessage, dispatch),
+    fetchChatHistory:bindActionCreators(fetchChatHistory, dispatch)
+});
+export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer);

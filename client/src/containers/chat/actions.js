@@ -1,6 +1,6 @@
 import * as type from './actionTypes';
 import request from "../../utils/request";
-import {CHAT} from "../../constants/urlConstants";
+import {CHAT, MESSAGE} from "../../constants/urlConstants";
 
 function fetchChatsSuccess(chats) {
     return {
@@ -13,6 +13,14 @@ function newChatSuccess(chat) {
     return {
         type: type.NEW_CHAT_SUCCESS,
         chat: chat
+    }
+}
+
+function fetchChatHistorySuccess(chatHistory, chatId) {
+    return {
+        type: type.CHAT_HISTORY_SUCCESS,
+        messages: chatHistory,
+        id:chatId
     }
 }
 
@@ -79,6 +87,23 @@ export function fetchUserChats(){
         try{
             const chats = await request(CHAT);
             dispatch(fetchChatsSuccess(chats));
+        }catch(err){
+            dispatch(chatsRequestError(err));
+        }
+
+    }
+}
+
+/**
+ * Fetch all user chats
+ * @returns {Function}
+ */
+export function fetchChatHistory(id, page = 0){
+    return  async dispatch => {
+        dispatch(ChatRequest());
+        try{
+            const chatHistory = await request(`${CHAT}/${id}/${MESSAGE}`,{page:page});
+            dispatch(fetchChatHistorySuccess(chatHistory, id));
         }catch(err){
             dispatch(chatsRequestError(err));
         }

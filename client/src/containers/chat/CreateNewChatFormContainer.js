@@ -37,10 +37,10 @@ class CreateNewChatFormContainer extends Component {
             <form noValidate className="flexbox-fill flex-column" onSubmit={this.createChat}>
                 <UserPickerContainer onClick={this.setParticipants}/>
                 <CreateChatBottomBar show={!isEmpty(participants)}>
-                    <Input onChange={this.setName} className="m-r-15 new-chat-input" value={name} placeholder="Group name"/>
-                    <FabButton disabled={isEmpty(name)} color="primary" type="submit" tooltip="Save Group">
-                        <MdArrowForward style={{fontSize:30, color:white}}/>
-                    </FabButton>
+                    {participants.length > 1 && <Input onChange={this.setName} className="m-r-15 new-chat-input" value={name} placeholder="Group name"/>}
+                        <FabButton disabled={participants.length > 1 && isEmpty(name)} color="primary" type="submit" tooltip="Save Group">
+                            <MdArrowForward style={{fontSize:30, color:white}}/>
+                        </FabButton>
                 </CreateChatBottomBar>
             </form>
         )

@@ -1,5 +1,6 @@
 import * as types from './actionTypes';
 import {NEW_CHAT_SUCCESS} from "./actionTypes";
+import {CHAT_HISTORY_SUCCESS} from "./actionTypes";
 
 const initialState = {
     isFetching: false,
@@ -27,6 +28,15 @@ export default (state = initialState, action) => {
         case NEW_CHAT_SUCCESS:
             let chats = state.chats;
             chats.set(action.chat.id, action.chat);
+            return Object.assign({}, state, {
+                chats: new Map(chats),
+                isFetching: false,
+                error:null
+            });
+        case CHAT_HISTORY_SUCCESS:
+            let selectedChat = state.chats.get(action.id);
+            selectedChat.messages = action.messages.concat(selectedChat.messages || []);
+            chats.set(action.id, selectedChat);
             return Object.assign({}, state, {
                 chats: new Map(chats),
                 isFetching: false,

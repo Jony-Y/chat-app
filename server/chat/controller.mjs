@@ -1,7 +1,9 @@
 import {getAllChats, getChat, removeChat, saveChat} from "./service";
+import {getUserById} from "../user/service";
+import isEmpty from "lodash/isEmpty";
 
 /**
- * Create chat
+ * Create  a new chat
  * @param req
  * @param res
  * @returns {Promise<*>}
@@ -9,10 +11,14 @@ import {getAllChats, getChat, removeChat, saveChat} from "./service";
 export const post = async(req, res) => {
     try {
         let data = req.body;
+        if(data.participants.length === 1 && isEmpty(data.name)){
+            const user = await getUserById(data.participants[0]);
+            data.name = user.name;
+        }
         let participants = new Set(data.participants);
         participants.add(req.user.id);
-        data.owner = req.user.id;
         data.participants = Array.from(participants.values());
+        data.owner = req.user.id;
         return res.json(await saveChat(data));
     }catch (err){
         console.log(err);

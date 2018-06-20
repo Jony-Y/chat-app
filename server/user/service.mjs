@@ -11,3 +11,8 @@ export const getAllUsers = () => {
 export const getUser = (payload) => {
     return User.findOne(payload).select('+password');
 };
+
+
+export const getUserById = (id) => {
+    return User.findOne({_id:id});
+};

@@ -52,8 +52,9 @@
   height: 80px;
   display: flex;
   width:100%;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
+  padding: 0 15px;
 
   .new-chat-input{
     width:calc(100% - 90px);
