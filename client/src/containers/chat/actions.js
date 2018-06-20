@@ -1,4 +1,6 @@
 import * as type from './actionTypes';
+import request from "../../utils/request";
+import {CHAT} from "../../constants/urlConstants";
 
 function fetchChatsSuccess(chats) {
     return {
@@ -42,14 +44,16 @@ export function addMessage(chatID, message) {
     }
 }
 
-export function fetchChats(){
-    return  function(dispatch){
+export function fetchUserChats(){
+    return  async dispatch => {
         dispatch(fetchChatsRequest());
         try{
-            dispatch(fetchChatsSuccess());
+            const chats = await request(CHAT);
+            dispatch(fetchChatsSuccess(chats));
         }catch(err){
             dispatch(fetchChatsError(err));
         }
 
     }
 }
+

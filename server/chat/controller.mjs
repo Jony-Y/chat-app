@@ -23,7 +23,7 @@ export const post = async(req, res) => {
  */
 export const getAll = async(req, res) => {
     try{
-        return res.json(await getAllChats());
+        return res.json(await getAllChats(req.user.id));
     }catch(err){
         console.log(err);
         return res.status(500).json(err);

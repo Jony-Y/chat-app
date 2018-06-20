@@ -13,7 +13,7 @@ const Schema = mongoose.Schema;
 function BaseSchema(...args){
     const schema = new Schema(Object.assign({},...args,{uuid:{type:String, default: uuid()}}), {
             timestamps:true,
-            strict: false,
+            strict: true,
             toJSON:{virtuals:true},
             toObject:{virtuals:true}
         });

@@ -10,7 +10,7 @@ const ChatList = ({chats, applyFilter}) =>(
             <SearchFilter onFilter={(filter)=> console.log(filter)} containerClassName="m-t-10"/>
         </SearchFilterBar>
         <div className="flexbox-fill flex-column p-l-15 p-r-15">
-            chat list here
+            {chats.map(chat => <div key={chat.id}>{chat.name}</div>)}
         </div>
     </div>
 );

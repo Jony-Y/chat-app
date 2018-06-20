@@ -7,7 +7,9 @@ let routes = express.Router();
 
 routes.get('/',(req, res)=> {res.status(200).json({message:'works'})});
 routes.use('/user',user);
-routes.use('/chat',isAuthenticated,chat);
-routes.use('/message',isAuthenticated,chatMessage);
+
+// authenticated router here
+routes.use('/chat',isAuthenticated, chat);
+routes.use('/message',isAuthenticated, chatMessage);
 
 export default routes;

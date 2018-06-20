@@ -15,6 +15,8 @@ import FaEdit from 'react-icons/lib/fa/edit';
 import withDrawer from "../../components/drawer/withDrawer";
 import Drawer from "../../components/drawer/Drawer";
 import UserPicker from "../user/UserPicker";
+import {chats} from "../chat/selectors";
+import {fetchUserChats} from '../chat/actions';
 
 class AppContainer extends Component {
 
@@ -27,6 +29,7 @@ class AppContainer extends Component {
             go('/auth');
         }
         this.props.fetchUsers();
+        this.props.fetchUserChats();
     }
 
     setActiveChat = (chatID) => {
@@ -35,7 +38,7 @@ class AppContainer extends Component {
     };
 
     render() {
-        const {logout, users, toggleDrawer, isDrawerOpen, closeDrawer} = this.props;
+        const {logout, users, chats, toggleDrawer, isDrawerOpen, closeDrawer} = this.props;
         return (
           <div className="app-container flexbox-fill">
               <div className="flexbox-fill h-fill flex-column w-300">
@@ -48,7 +51,7 @@ class AppContainer extends Component {
                   <Drawer open={isDrawerOpen} header="Select Users" bodyClass="bg-lightest-gray" onClose={closeDrawer}>
                       <UserPicker users={users} onClick={this.setActiveChat}/>
                   </Drawer>
-                  <ChatList users={users} onClick={this.setActiveChat}/>
+                  <ChatList chats={chats} onClick={this.setActiveChat}/>
               </div>
               <ChatContainer/>
           </div>
@@ -58,13 +61,15 @@ class AppContainer extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        users: users(state.user)
+        users: users(state.user),
+        chats: chats(state.chat)
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
    logout:bindActionCreators(logout, dispatch),
-   fetchUsers: bindActionCreators(fetchUsers, dispatch)
+   fetchUsers: bindActionCreators(fetchUsers, dispatch),
+   fetchUserChats: bindActionCreators(fetchUserChats, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withDrawer(AppContainer));
