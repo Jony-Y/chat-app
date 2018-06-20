@@ -4,18 +4,18 @@ import Button from '@material-ui/core/Button';
 import './button.css';
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 
-const RaisedButton = ({containerClass, containerStyle, label, style, className, onClick, tooltip, ...rest}) => (
+const FabButton = ({containerClass, containerStyle, children, style, className, onClick, tooltip, ...rest}) => (
     <div className={containerClass} style={containerStyle}>
-        {tooltip?(<Tooltip title={tooltip?tooltip:null}>
+        {tooltip?(<Tooltip title={tooltip?tooltip:''}>
             <div className="flexbox-fill">
-                <Button {...rest} onClick={onClick} variant="raised" style={style} className={className}>{label}</Button>
+                <Button {...rest} onClick={onClick} variant="fab" style={style} className={className}>{children}</Button>
             </div>
-        </Tooltip>):(<Button {...rest} onClick={onClick} variant="raised" style={style} className={className}>{label}</Button>)}
+        </Tooltip>):(<Button {...rest} onClick={onClick} variant="fab" style={style} className={className}>{children}</Button>)}
     </div>
 );
 
-RaisedButton.propTypes = {
-    label:PropTypes.string.isRequired,
+FabButton.propTypes = {
+    children:PropTypes.node.isRequired,
     onClick:PropTypes.func,
     className:PropTypes.string,
     style:PropTypes.object,
@@ -24,4 +24,5 @@ RaisedButton.propTypes = {
     containerStyle:PropTypes.string
 
 };
-export default RaisedButton;
+
+export default FabButton;

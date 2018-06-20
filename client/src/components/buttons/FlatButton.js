@@ -7,7 +7,9 @@ import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 const FlatButton = ({containerClass, containerStyle, label, style, className, onClick, tooltip, ...rest}) => (
     <div className={containerClass} style={containerStyle}>
         {tooltip?(<Tooltip title={tooltip?tooltip:''}>
-            <Button {...rest} onClick={onClick} variant="flat" style={style} className={className}>{label}</Button>
+            <div className="flexbox-fill">
+                <Button {...rest} onClick={onClick} variant="flat" style={style} className={className}>{label}</Button>
+            </div>
         </Tooltip>):(<Button {...rest} onClick={onClick} variant="flat" style={style} className={className}>{label}</Button>)}
     </div>
 );

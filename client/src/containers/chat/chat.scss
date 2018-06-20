@@ -1,8 +1,8 @@
 @import "../../sass/variables";
-.chat-list{
+.chat-picker-container{
   height:100%;
   flex-flow: column;
-  overflow-y: auto;
+  background: $lightest-gray;
   box-shadow: rgba(0, 0, 0, 0.2) 0 1px 6px, rgba(0, 0, 0, 0.2) 0 1px 4px;
   border-right: 1px solid $lighter-gray;
 }
@@ -42,5 +42,20 @@
   .date{
     font-size: 9px;
     color:$light-gray
+  }
+}
+
+.create-chat-bottom-bar{
+  position:absolute;
+  bottom:0;
+  background: $lighter-gray;
+  height: 80px;
+  display: flex;
+  width:100%;
+  justify-content: center;
+  align-items: center;
+
+  .new-chat-input{
+    width:calc(100% - 90px);
   }
 }

@@ -3,20 +3,19 @@ import {connect} from 'react-redux';
 import {logout, fetchUsers} from '../user/actions';
 import {bindActionCreators} from 'redux';
 import './app.css';
-import ChatList from "../chat/ChatList";
 import ChatContainer from "../chat";
 import {getQueryParams, go} from "../../utils/navigationUtility";
 import userUtility from '../../utils/userUtility';
 import AppBar from "../../components/AppBar";
-import {users} from "../user/selectors";
 import AppBarSettings from "./AppBarSettings";
 import IconButton from "../../components/buttons/IconButton";
 import FaEdit from 'react-icons/lib/fa/edit';
 import withDrawer from "../../components/drawer/withDrawer";
 import Drawer from "../../components/drawer/Drawer";
-import UserPicker from "../user/UserPicker";
 import {chats} from "../chat/selectors";
 import {fetchUserChats} from '../chat/actions';
+import ChatPicker from "../chat/ChatPicker";
+import CreateNewChatFormContainer from "../chat/CreateNewChatFormContainer";
 
 class AppContainer extends Component {
 
@@ -37,8 +36,13 @@ class AppContainer extends Component {
         go('/',{chat:chatID});
     };
 
+    handleNewChat = (chatID) => {
+      this.props.closeDrawer();
+      this.setActiveChat(chatID)
+    };
     render() {
-        const {logout, users, chats, toggleDrawer, isDrawerOpen, closeDrawer} = this.props;
+        const {logout, chats, toggleDrawer, isDrawerOpen, closeDrawer} = this.props;
+        const {activeChat} = this.state;
         return (
           <div className="app-container flexbox-fill">
               <div className="flexbox-fill h-fill flex-column w-300">
@@ -49,9 +53,9 @@ class AppContainer extends Component {
                       </div>
                   </AppBar>
                   <Drawer open={isDrawerOpen} header="Select Users" bodyClass="bg-lightest-gray" onClose={closeDrawer}>
-                      <UserPicker users={users} onClick={this.setActiveChat}/>
+                      <CreateNewChatFormContainer onCreate={this.handleNewChat}/>
                   </Drawer>
-                  <ChatList chats={chats} onClick={this.setActiveChat}/>
+                  <ChatPicker activeChat={activeChat} chats={chats} onClick={this.setActiveChat}/>
               </div>
               <ChatContainer/>
           </div>
@@ -60,10 +64,7 @@ class AppContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {
-        users: users(state.user),
-        chats: chats(state.chat)
-    }
+    return {chats: chats(state.chat)}
 };
 
 const mapDispatchToProps = (dispatch) => ({

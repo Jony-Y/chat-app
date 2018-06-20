@@ -6,7 +6,9 @@ import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 const IconButton = ({containerClass, containerStyle, tooltip,children,...rest}) => (
     <div className={containerClass} style={containerStyle}>
         {tooltip?(<Tooltip title={tooltip?tooltip:null}>
-            <MuiIconButton {...rest}>{children}</MuiIconButton>
+            <div className="flexbox-fill">
+                <MuiIconButton {...rest}>{children}</MuiIconButton>
+            </div>
         </Tooltip>):(<MuiIconButton {...rest}>{children}</MuiIconButton>)}
     </div>
 );

@@ -6,6 +6,7 @@ import MdClear from 'react-icons/lib/md/clear';
 import {lightGray} from "../../themes/colors";
 
 const iconStyle = {fontSize:25, fill:lightGray};
+
 class SearchFilter extends Component {
 
     constructor(props){
@@ -16,16 +17,17 @@ class SearchFilter extends Component {
     handleInputChange = (e) => {
         const filter = e.target.value;
         this.setState({filter:filter});
-        this.props.onFilter(filter);
+        this.props.onChange(filter);
     };
 
     clearFilter = () => {
         this.setState({filter:''});
-        this.props.onFilter('');
+        this.props.onChange('');
     };
 
     render(){
         const {containerClassName, containerStyle, ...rest} = this.props;
+        delete rest.onChange;
         const {filter} = this.state;
         return (
             <div className={`flexbox-fill flex-start-center filter-input ${containerClassName}`} style={containerStyle}>
@@ -38,7 +40,7 @@ class SearchFilter extends Component {
 }
 
 SearchFilter.propTypes = {
-    onFilter:PropTypes.func.isRequired,
+    onChange:PropTypes.func.isRequired,
     containerClassName:PropTypes.string,
     containerStyle:PropTypes.object
 };

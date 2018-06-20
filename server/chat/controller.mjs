@@ -8,7 +8,12 @@ import {getAllChats, getChat, removeChat, saveChat} from "./service";
  */
 export const post = async(req, res) => {
     try {
-        return res.json(await saveChat({...req.body, owner:req.user.id}));
+        let data = req.body;
+        let participants = new Set(data.participants);
+        participants.add(req.user.id);
+        data.owner = req.user.id;
+        data.participants = Array.from(participants.values());
+        return res.json(await saveChat(data));
     }catch (err){
         console.log(err);
         return res.status(500).json(err);

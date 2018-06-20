@@ -12,7 +12,7 @@ class UserListItem extends Component {
     render(){
         const {user, isSelected} = this.props;
         return(
-            <MenuItem id={user.id} style={{paddingLeft:0}} onClick={this.handleItemClick} selected={isSelected}>
+            <MenuItem separator style={{paddingLeft:0}} onClick={this.handleItemClick} selected={isSelected}>
                 <Checkbox color="primary" checked={isSelected} onChange={this.handleItemClick}/> <div>{user.name}</div>
             </MenuItem>
         )

@@ -6,25 +6,24 @@ import SearchFilter from "../../components/inputs/SearchFilter";
 import UserList from "./UserList";
 import UserListItem from "./UserListItem";
 import VerticalDivider from "../../components/VerticalDivder";
+import {users} from "./selectors";
+import {connect} from "react-redux";
 
-class UserPicker extends Component {
+class UserPickerContainer extends Component {
     constructor(props){
         super(props);
         this.state = {selectedUsers:new Set(), filteredUsers:props.users ||  []};
     }
 
     selectUser = (userID) => {
-        if(this.state.selectedUsers.has(userID)){
-            this.setState(({ selectedUsers }) => {
-                selectedUsers.delete(userID);
-                return {selectedUsers: new Set(selectedUsers)}
-            });
-
+        let selectedUsers = this.state.selectedUsers;
+        if(selectedUsers.has(userID)){
+            selectedUsers.delete(userID);
         }else{
-            this.setState(({ selectedUsers }) => ({
-                selectedUsers: new Set(selectedUsers.add(userID))
-            }));
+            selectedUsers.add(userID);
         }
+        this.setState({selectedUsers:selectedUsers});
+        this.props.onClick(Array.from(selectedUsers.values()));
     };
 
     filterUsers = (filter) => {
@@ -36,7 +35,7 @@ class UserPicker extends Component {
         return (
             <div className="user-picker-container">
                 <SearchFilterBar>
-                    <SearchFilter onFilter={this.filterUsers}/>
+                    <SearchFilter onChange={this.filterUsers}/>
                 </SearchFilterBar>
                 <VerticalDivider className="m-t-5"/>
                 <UserList>
@@ -48,9 +47,15 @@ class UserPicker extends Component {
     }
 }
 
-UserPicker.propTypes = {
-    users:PropTypes.array.isRequired,
+UserPickerContainer.propTypes = {
     onClick:PropTypes.func.isRequired
 };
 
-export default UserPicker;
+const mapStateToProps = (state) => {
+    return {
+        users: users(state.user)
+    }
+};
+
+
+export default connect(mapStateToProps, null) (UserPickerContainer);

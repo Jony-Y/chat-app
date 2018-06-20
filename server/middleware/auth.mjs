@@ -12,7 +12,7 @@ import User from '../user/model';
 export function isAuthenticated(req, res, next) {
     const auth = req.headers['authorization'] || req.headers['Authorization'];
     if(!auth){
-        return res.status(403).json({status:403, message:'No Token Provided'})
+        return res.json({status:403, message:'No Token Provided'})
     }
     const token = auth.replace('Bearer ','');
     jwt.verify(token, secretKey, async(err, decoded) => {
