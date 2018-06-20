@@ -11,3 +11,7 @@ export const getAllChats = () => {
 export const getChat = (id) => {
     return Chat.findOne({_id:id}).populate('participants');
 };
+
+export const removeChat = (id) => {
+    return Chat.remove({_id:id});
+};
