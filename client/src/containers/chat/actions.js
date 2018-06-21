@@ -42,6 +42,12 @@ function _setChatName(chat){
     }
 }
 
+/**
+ * Process the server chat data
+ * @param chats {Array} chat list
+ * @returns {Array}
+ * @private
+ */
 function _processUserChats(chats) {
     return chats.map(chat=>{
         _setChatName(chat);

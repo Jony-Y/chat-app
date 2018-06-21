@@ -1,0 +1,13 @@
+@import "../../sass/variables";
+.sign-up-body{
+  height:400px;
+  width:400px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 1px 6px, rgba(0, 0, 0, 0.2) 0 1px 4px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-flow: column;
+  background: $lightest-gray;
+  padding: 15px;
+
+}

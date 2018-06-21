@@ -1,12 +1,13 @@
 import React , {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {loginUser} from './actions';
+import {loginUser, signUpUser} from './actions';
 import AppBar from "../../components/AppBar";
 import SignUpForm from "./SignUpForm";
 import LoginForm from "./LoginForm";
 import {go} from "../../utils/navigationUtility";
 import userUtility from "../../utils/userUtility";
+import './auth.css';
 
 class AuthContainer extends Component {
 
@@ -16,12 +17,12 @@ class AuthContainer extends Component {
         }
     }
     render(){
-        const {login} = this.props;
+        const {login, signUp} = this.props;
         return (
             <div className="flexbox-fill h-fill flex-column">
                 <AppBar color="default"><div className="flex-end"><LoginForm onSubmit={login}/></div></AppBar>
-                <div className="relative top-60 flex-center">
-                    <SignUpForm/>
+                <div className="relative h-fill flex-center">
+                    <SignUpForm onSubmit={signUp}/>
                 </div>
             </div>
         )
@@ -29,7 +30,8 @@ class AuthContainer extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    login: bindActionCreators(loginUser, dispatch)
+    login: bindActionCreators(loginUser, dispatch),
+    signUp: bindActionCreators(signUpUser, dispatch)
 });
 
 export default connect(null, mapDispatchToProps)(AuthContainer);

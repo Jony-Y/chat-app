@@ -1,5 +1,5 @@
 import {AUTH_SUCCESS, AUTH_REQUEST, AUTH_FAILURE} from './actionTypes';
-import {login} from '../user/actions';
+import {login, signUp} from '../user/actions';
 
 function authSuccess(){
     return {type:AUTH_SUCCESS}
@@ -28,6 +28,27 @@ export function loginUser(email, password){
             dispatch(authRequest());
             try{
                 await login(email, password);
+                dispatch(authSuccess())
+            }catch (e) {
+                dispatch(authFailure(e))
+            }
+
+        }
+    }
+}
+
+
+/**
+ * Perform user sign up
+ * @param payload {Object}   the user details
+ * @returns {Function}
+ */
+export function signUpUser(payload){
+    return async dispatch => {
+        if(payload.email && payload.password){
+            dispatch(authRequest());
+            try{
+                await signUp(payload);
                 dispatch(authSuccess())
             }catch (e) {
                 dispatch(authFailure(e))
