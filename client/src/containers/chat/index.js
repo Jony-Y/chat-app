@@ -4,41 +4,36 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import './chat.css';
 import NewMessageForm from "./NewMessageForm";
-import {chatMessages} from "./selectors";
-import {addMessage, fetchChatHistory} from "./actions";
-import ChatMessage from "./ChatMessage";
+import {chatMessages} from "../chatMessage/selectors";
+import {fetchChatMessages, sendChatMessage} from "../chatMessage/actions";
+import ChatMessage from "../chatMessage/ChatMessage";
 import io from 'socket.io-client';
 import isEmpty from 'lodash/isEmpty';
 
 class ChatContainer extends Component {
 
     componentDidMount(){
-        this.props.fetchChatHistory();
+        this.props.fetchChatMessages(this.props.id);
         this.socket = io.connect(process.env.REACT_APP_SOCKET_URL);
-        this.socket.on('RECEIVE_MESSAGE', (data) => {
-            this.setState({messages:[...this.state.messages,data]});
+        this.socket.on('general', (data) => {
+            console.log(data)
         })
     }
 
-    addMessage = (message) => {
-        if(!isEmpty(message)) {
-            this.socket.emit('SEND_MESSAGE', {
-                author: 'me',
-                id: Date.now(),
-                body: message,
-                creationDate: Date.now()
-            });
-        }
+    sendMessage = (message) => {
+      if(!isEmpty(message)){
+          this.props.sendChatMessage(message, this.props.id);
+      }
     };
 
     render(){
-        const {addMessage, messages} = this.props;
+        const {messages} = this.props;
         return (
             <div className="chat-container flexbox flexbox-column-fill flex-start">
                 <div className="chat-body p-l-15">
                     {messages.map(message => <ChatMessage key={message.id} message={message}/>)}
                 </div>
-                <NewMessageForm onSubmit={this.addMessage}/>
+                <NewMessageForm onSubmit={this.sendMessage}/>
             </div>
         )
     }
@@ -54,7 +49,7 @@ const mapStateToProps = (state, props) => {
     }
 };
 const mapDispatchToProps = (dispatch) => ({
-    addMessage : bindActionCreators(addMessage, dispatch),
-    fetchChatHistory:bindActionCreators(fetchChatHistory, dispatch)
+    sendChatMessage : bindActionCreators(sendChatMessage, dispatch),
+    fetchChatMessages:bindActionCreators(fetchChatMessages, dispatch)
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer);

@@ -57,7 +57,7 @@ class AppContainer extends Component {
                   </Drawer>
                   <ChatPicker activeChat={activeChat} chats={chats} onSelect={this.setActiveChat}/>
               </div>
-              <ChatContainer/>
+              <ChatContainer id={activeChat}/>
           </div>
         );
     }

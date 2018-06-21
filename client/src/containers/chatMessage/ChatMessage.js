@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Avatar from "../../components/Avatar";
+import './chatMessage.css';
 
 const ChatMessage = ({message}) => (
     <div className="flexbox-fill flex-start-center">

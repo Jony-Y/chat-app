@@ -39,24 +39,6 @@
 
 }
 
-.chat-message{
-  display: flex;
-  flex-flow: column wrap;
-  box-shadow: rgba(0, 0, 0, 0.2) 0 1px 6px, rgba(0, 0, 0, 0.2) 0 1px 4px;
-  border-radius: 10px;
-  padding: 3px 10px;
-  min-width: 100px;
-  width: fit-content;
-  margin:15px 7px;
-  .body{
-    color:$gray;
-  }
-  .date{
-    font-size: 9px;
-    color:$light-gray
-  }
-}
-
 .create-chat-bottom-bar{
   position:absolute;
   bottom:0;

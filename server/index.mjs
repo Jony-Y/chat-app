@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
-import socket from 'socket.io';
+import Socket from './utils/socket';
 import mongoose from 'mongoose';
 import routes from './router';
 import {mongoUrl, port} from './config';
@@ -21,10 +21,4 @@ app.use('/api/v1', routes);
 let server = app.listen(port,() => {
     console.log(`server is running on ${port} `)
 });
-let io = socket(server);
-io.on('connection',(socket) => {
-    socket.on('SEND_MESSAGE', (data) => {
-        console.log(data);
-        io.emit('RECEIVE_MESSAGE', data);
-    })
-});
+new Socket(server);

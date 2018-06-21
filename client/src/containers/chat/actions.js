@@ -1,6 +1,6 @@
 import * as type from './actionTypes';
 import request from "../../utils/request";
-import {CHAT, MESSAGE} from "../../constants/urlConstants";
+import {CHAT} from "../../constants/urlConstants";
 
 function fetchChatsSuccess(chats) {
     return {
@@ -16,14 +16,6 @@ function newChatSuccess(chat) {
     }
 }
 
-function fetchChatHistorySuccess(chatHistory, chatId) {
-    return {
-        type: type.CHAT_HISTORY_SUCCESS,
-        messages: chatHistory,
-        id:chatId
-    }
-}
-
 function chatsRequestError(error) {
     return {
         type: type.FETCH_CHAT_FAILURE,
@@ -34,28 +26,6 @@ function chatsRequestError(error) {
 function ChatRequest() {
     return {
         type: type.FETCH_CHAT_REQUEST
-    }
-}
-
-function newMessage(chatID, message) {
-    return {
-        type: type.CHAT_NEW_MESSAGE,
-        chatID: chatID,
-        message:message
-    }
-}
-
-/**
- * Send a new message to chat group
- * @param chatID
- * @param message
- * @returns {Function}
- */
-export function addMessage(chatID, message) {
-    return function (getState, dispatch) {
-        if (getState.chat.chats.has(chatID)) {
-            dispatch(newMessage(chatID,message))
-        }
     }
 }
 
@@ -90,24 +60,6 @@ export function fetchUserChats(){
         }catch(err){
             dispatch(chatsRequestError(err));
         }
-
-    }
-}
-
-/**
- * Fetch all user chats
- * @returns {Function}
- */
-export function fetchChatHistory(id, page = 0){
-    return  async dispatch => {
-        dispatch(ChatRequest());
-        try{
-            const chatHistory = await request(`${CHAT}/${id}/${MESSAGE}`,{page:page});
-            dispatch(fetchChatHistorySuccess(chatHistory, id));
-        }catch(err){
-            dispatch(chatsRequestError(err));
-        }
-
     }
 }
 
