@@ -7,5 +7,5 @@ const getUsers = state => state.users;
  *  get user list
  */
 export const users = createSelector(getUsers, (userList) => {
-    return  !isEmpty(userList)? userList : [];
+    return  !isEmpty(userList)? Array.from(userList.values()) : [];
 });

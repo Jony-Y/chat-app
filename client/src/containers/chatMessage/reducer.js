@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
             });
         case types.CHAT_MESSAGES_SUCCESS:
             let chatMessages = state.chatMessages;
-            chatMessages.set(action.chatId, action.chatMessages);
+            chatMessages.set(action.chatId, action.messages);
             return Object.assign({}, state, {
                 chatMessages: new Map(chatMessages),
                 isFetching: false,

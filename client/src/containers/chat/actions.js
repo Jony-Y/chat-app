@@ -1,6 +1,8 @@
 import * as type from './actionTypes';
 import request from "../../utils/request";
 import {CHAT} from "../../constants/urlConstants";
+import isEmpty from "lodash/isEmpty";
+import userUtility from "../../utils/userUtility";
 
 function fetchChatsSuccess(chats) {
     return {
@@ -30,6 +32,24 @@ function ChatRequest() {
 }
 
 /**
+ * Set the chat name in case there is none;
+ * @param chat
+ * @private
+ */
+function _setChatName(chat){
+    if(chat.participants.length === 2 && isEmpty(chat.name)){
+        chat.name = userUtility.isOwner(chat.participants[0])?chat.participants[1].name:chat.participants[0].name;
+    }
+}
+
+function _processUserChats(chats) {
+    return chats.map(chat=>{
+        _setChatName(chat);
+        return chat;
+    })
+
+}
+/**
  * Send a new message to chat group
  * @param payload {Object}  The payload to create new chat
  * @returns {Function}
@@ -38,7 +58,8 @@ export function createChat(payload) {
     return async dispatch => {
         dispatch(ChatRequest());
         try {
-            const newChat = await request(CHAT, {method:'POST', body:payload});
+            let newChat = await request(CHAT, {method:'POST', body:payload});
+            _setChatName(newChat);
             dispatch(newChatSuccess(newChat));
             return newChat;
         }catch (err) {
@@ -55,7 +76,7 @@ export function fetchUserChats(){
     return  async dispatch => {
         dispatch(ChatRequest());
         try{
-            const chats = await request(CHAT);
+            const chats = _processUserChats(await request(CHAT));
             dispatch(fetchChatsSuccess(chats));
         }catch(err){
             dispatch(chatsRequestError(err));

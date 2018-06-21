@@ -28,8 +28,8 @@ class ChatPicker extends Component {
     };
 
     render(){
-        const {activeChat, filteredChats} = this.state;
-        const {onSelect} = this.props;
+        const {filteredChats} = this.state;
+        const {onSelect, activeChat} = this.props;
         return (
             <div className="chat-picker-container">
                 <SearchFilterBar>

@@ -11,7 +11,8 @@
     width: 100%;
     height: 100%;
     overflow-y: auto;
-    flex-flow: column; }
+    flex-flow: column;
+    padding: 0 15px; }
     .chat-container .chat-body:after {
       content: "";
       background: #fbfcfe url("../../assets/super_hero_background.jpg") 100% 100% no-repeat;

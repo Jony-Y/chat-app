@@ -5,7 +5,7 @@ export const saveChatMessage = (payload) => {
 };
 
 export const getChatMessages = (id, offset = 0) => {
-    return ChatMessage.find({chatId:id}).populate('owner').sort('-createdAt').skip(20*offset).limit(20);
+    return ChatMessage.find({chatId:id}).populate('owner').sort('createdAt').skip(20*offset).limit(20);
 };
 
 

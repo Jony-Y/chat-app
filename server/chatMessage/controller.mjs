@@ -23,7 +23,7 @@ export const post = async(req, res) => {
  */
 export const getAll = async(req, res) => {
     try{
-        return res.json(await getChatMessages(req.params.chatId, req.query.page));
+        return res.json(await getChatMessages(req.params.id, req.query.page));
     }catch(err){
         console.log(err);
         return res.status(500).json(err);

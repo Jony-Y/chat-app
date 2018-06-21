@@ -30,11 +30,11 @@ function chatMessagesRequest() {
     }
 }
 
-function chatMessagesSuccess(chatID, message) {
+function chatMessagesSuccess(chatID, messages = []) {
     return {
         type: type.CHAT_MESSAGES_SUCCESS,
         chatId: chatID,
-        message:message
+        messages:messages
     }
 }
 
@@ -47,8 +47,8 @@ function newMessageFailure(err) {
 
 /**
  * Send a new message to chat group
- * @param chatID
- * @param message
+ * @param chatID {String}   The chat id to save to
+ * @param message   {String}    THe message body to save
  * @returns {Function}
  */
 export function sendChatMessage(chatID, message) {

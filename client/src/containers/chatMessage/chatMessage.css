@@ -6,9 +6,35 @@
   padding: 3px 10px;
   min-width: 100px;
   width: fit-content;
-  margin: 15px 7px; }
-  .chat-message .body {
-    color: #999999; }
+  margin: 15px 7px;
+  background: #fcfcfc;
+  word-wrap: break-word; }
   .chat-message .date {
+    display: flex;
+    justify-content: flex-end;
     font-size: 9px;
     color: #b3b3b3; }
+  .chat-message .user {
+    color: #999999;
+    font-size: 12px; }
+  .chat-message .message-arrow {
+    position: relative; }
+    .chat-message .message-arrow:after {
+      position: absolute;
+      content: "";
+      width: 0;
+      height: 0;
+      border-style: solid; }
+  .chat-message .message-arrow.received:after {
+    border-width: 0 15px 20px 0;
+    border-color: transparent #fcfcfc transparent transparent;
+    top: -3px;
+    left: -18px; }
+  .chat-message .message-arrow.sent:after {
+    border-width: 0 0 20px 15px;
+    border-color: transparent transparent transparent #e1ffc7;
+    top: -3px;
+    right: -18px; }
+
+.chat-message.sent {
+  background: #e1ffc7; }

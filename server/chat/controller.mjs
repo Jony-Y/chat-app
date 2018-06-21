@@ -1,6 +1,4 @@
 import {getAllChats, getChat, removeChat, saveChat} from "./service";
-import {getUserById} from "../user/service";
-import isEmpty from "lodash/isEmpty";
 
 /**
  * Create  a new chat
@@ -11,10 +9,6 @@ import isEmpty from "lodash/isEmpty";
 export const post = async(req, res) => {
     try {
         let data = req.body;
-        if(data.participants.length === 1 && isEmpty(data.name)){
-            const user = await getUserById(data.participants[0]);
-            data.name = user.name;
-        }
         let participants = new Set(data.participants);
         participants.add(req.user.id);
         data.participants = Array.from(participants.values());

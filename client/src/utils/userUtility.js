@@ -40,6 +40,10 @@ class User{
         return this._user.email;
     }
 
+    isOwner(owner){
+        return owner.id === this._user.id;
+    }
+
 }
 
 const user = new User();

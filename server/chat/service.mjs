@@ -1,7 +1,7 @@
 import Chat from "./model";
 
 export const saveChat = (payload) => {
-    return new Chat(payload).save();
+    return Chat(payload).save().then(chat => chat.populate('participants').execPopulate());
 };
 
 export const getAllChats = (userId) => {

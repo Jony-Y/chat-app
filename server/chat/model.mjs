@@ -4,7 +4,7 @@ import {deleteChatMessages} from "../chatMessage/service";
 const Schema = mongoose.Schema;
 
 const chatSchema = BaseSchema({
-    name:{type:String, required:true},
+    name:String,
     participants:[{
         type: Schema.Types.ObjectId, ref: 'User',
         required: true

@@ -9,6 +9,8 @@ import {fetchChatMessages, sendChatMessage} from "../chatMessage/actions";
 import ChatMessage from "../chatMessage/ChatMessage";
 import io from 'socket.io-client';
 import isEmpty from 'lodash/isEmpty';
+import userUtility from "../../utils/userUtility";
+import CSSTransition from "../../components/CSSTransition";
 
 class ChatContainer extends Component {
 
@@ -22,7 +24,7 @@ class ChatContainer extends Component {
 
     sendMessage = (message) => {
       if(!isEmpty(message)){
-          this.props.sendChatMessage(message, this.props.id);
+          this.props.sendChatMessage(this.props.id, message);
       }
     };
 
@@ -30,9 +32,9 @@ class ChatContainer extends Component {
         const {messages} = this.props;
         return (
             <div className="chat-container flexbox flexbox-column-fill flex-start">
-                <div className="chat-body p-l-15">
-                    {messages.map(message => <ChatMessage key={message.id} message={message}/>)}
-                </div>
+                <CSSTransition animation="fade" className="chat-body">
+                    {messages.map(message => <ChatMessage key={message.id} isOwner={userUtility.isOwner(message.owner)} message={message}/>)}
+                </CSSTransition>
                 <NewMessageForm onSubmit={this.sendMessage}/>
             </div>
         )

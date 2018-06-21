@@ -2,7 +2,7 @@ import * as types from './actionTypes';
 
 const initialState = {
     isFetching: false,
-    users: []
+    users: new Map()
 };
 
 export default (state = initialState, action) => {
@@ -19,7 +19,7 @@ export default (state = initialState, action) => {
             });
         case types.FETCH_USERS_SUCCESS:
             return Object.assign({}, state, {
-                users: [...action.users],
+                users: new Map(action.users.map(user => [user.id, user])),
                 isFetching: false,
                 error:null
             });
