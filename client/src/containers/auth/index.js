@@ -20,7 +20,7 @@ class AuthContainer extends Component {
         const {login, signUp} = this.props;
         return (
             <div className="flexbox-fill h-fill flex-column">
-                <AppBar color="default"><div className="flex-end"><LoginForm onSubmit={login}/></div></AppBar>
+                <AppBar color="default"><div className="flex-end m-r-40"><LoginForm onSubmit={login}/></div></AppBar>
                 <div className="relative h-fill flex-center">
                     <SignUpForm onSubmit={signUp}/>
                 </div>

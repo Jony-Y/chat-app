@@ -1,0 +1,8 @@
+.form-validated .form-control:valid ~ .form-text-helper {
+  display: none; }
+
+.form-validated .form-control:invalid {
+  border: 1px solid #ff001e; }
+
+.form-validated .form-text-helper {
+  color: #ff001e; }

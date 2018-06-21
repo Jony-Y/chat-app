@@ -1,5 +1,5 @@
 .sign-up-body {
-  height: 400px;
+  min-height: 400px;
   width: 400px;
   box-shadow: rgba(0, 0, 0, 0.2) 0 1px 6px, rgba(0, 0, 0, 0.2) 0 1px 4px;
   display: flex;
