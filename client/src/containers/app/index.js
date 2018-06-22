@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {logout, fetchUsers} from '../user/actions';
 import {bindActionCreators} from 'redux';
+import io from '../../utils/socket';
 import './app.css';
 import ChatContainer from "../chat";
 import {getQueryParams, go} from "../../utils/navigationUtility";
@@ -16,6 +17,7 @@ import {chats} from "../chat/selectors";
 import {fetchUserChats} from '../chat/actions';
 import ChatPicker from "../chat/ChatPicker";
 import CreateNewChatFormContainer from "../chat/CreateNewChatFormContainer";
+import {CHAT} from "../../constants/urlConstants";
 
 class AppContainer extends Component {
 
@@ -27,12 +29,20 @@ class AppContainer extends Component {
         if(!userUtility.isLoggedIn){
             go('/auth');
         }
+        io.subscribeGeneral((payload)=> console.log(payload));
+        if(this.state.activeChat){
+            io.subscribeRoom(`${CHAT}:${this.state.activeChat}`);
+        }
         this.props.fetchUsers();
         this.props.fetchUserChats();
     }
 
     setActiveChat = (chatID) => {
+        if(this.state.activeChat){
+            io.unsubscribeRoom(`${CHAT}:${this.state.activeChat}`);
+        }
         this.setState({activeChat:chatID});
+        io.subscribeRoom(`${CHAT}:${chatID}`);
         go('/',{chat:chatID});
     };
 

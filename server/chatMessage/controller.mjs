@@ -1,4 +1,6 @@
 import {deleteChatMessage, getChatMessage, getChatMessages, saveChatMessage} from "./service";
+import {SOCKET_MESSAGE_ROOM, CHAT} from "../utils/constants";
+import io from '../utils/socket';
 
 /**
  * Create chat message
@@ -8,7 +10,10 @@ import {deleteChatMessage, getChatMessage, getChatMessages, saveChatMessage} fro
  */
 export const post = async(req, res) => {
     try {
-        return res.json(await saveChatMessage({...req.body, owner:req.user.id}));
+        const message = await saveChatMessage({...req.body, owner:req.user.id});
+        io.emitRoom(`${CHAT}:${message.chatId}`, message);
+        console.log('message created');
+        return res.json(message);
     }catch (err){
         console.log(err);
         return res.status(500).json(err);
@@ -23,7 +28,9 @@ export const post = async(req, res) => {
  */
 export const getAll = async(req, res) => {
     try{
-        return res.json(await getChatMessages(req.params.id, req.query.page));
+        let messages = await getChatMessages(req.params.id, req.query.page);
+        messages.sort((a,b) => a.createdAt - b.createdAt);
+        return res.json(messages);
     }catch(err){
         console.log(err);
         return res.status(500).json(err);

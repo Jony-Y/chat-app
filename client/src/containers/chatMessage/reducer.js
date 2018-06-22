@@ -2,7 +2,7 @@ import * as types from './actionTypes';
 
 const initialState = {
     isFetching: false,
-    chatMessages: new Map()
+    chatMessages: {}
 };
 
 export default (state = initialState, action) => {
@@ -18,22 +18,15 @@ export default (state = initialState, action) => {
                 error:null
             });
         case types.CHAT_NEW_MESSAGE_SUCCESS:
-            let chats = state.chatMessages;
-            let messages = chats.get(action.chatId);
-            messages.push(action.message);
-            return Object.assign({}, state, {
-                chats: new Map(chats),
-                isFetching: false,
-                error:null
-            });
+            state.chatMessages[action.chatId] = [
+                ...state.chatMessages[action.chatId],
+                action.message
+            ];
+            return {...state};
+
         case types.CHAT_MESSAGES_SUCCESS:
-            let chatMessages = state.chatMessages;
-            chatMessages.set(action.chatId, action.messages);
-            return Object.assign({}, state, {
-                chatMessages: new Map(chatMessages),
-                isFetching: false,
-                error:null
-            });
+            state.chatMessages[action.chatId] = action.messages.concat(state.chatMessages[action.chatId] || []);
+            return {...state};
         default:
             return state;
     }

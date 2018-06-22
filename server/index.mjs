@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
-import Socket from './utils/socket';
+import socket from './utils/socket';
 import mongoose from 'mongoose';
 import routes from './router';
 import {mongoUrl, port} from './config';
@@ -21,4 +21,4 @@ app.use('/api/v1', routes);
 let server = app.listen(port,() => {
     console.log(`server is running on ${port} `)
 });
-new Socket(server);
+socket.connect(server);

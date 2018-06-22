@@ -1,5 +1,6 @@
 import Cookie from 'js-cookie';
 import isEmpty from "lodash/isEmpty";
+import isObject from 'lodash/isObject';
 
 class User{
     constructor(){
@@ -41,7 +42,7 @@ class User{
     }
 
     isOwner(owner){
-        return owner.id === this._user.id;
+        return isObject(owner)?owner.id === this._user.id: owner === this._user.id;
     }
 
 }

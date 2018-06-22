@@ -6,6 +6,10 @@ const chatMessage = mongoose.model('ChatMessage', BaseSchema({
         type:String,
         default:''
     },
+    isRead:{
+        type:Boolean,
+        default:false
+    },
     chatId:{
         type:String,
         required:true

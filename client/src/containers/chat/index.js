@@ -5,20 +5,20 @@ import {bindActionCreators} from 'redux';
 import './chat.css';
 import NewMessageForm from "./NewMessageForm";
 import {chatMessages} from "../chatMessage/selectors";
-import {fetchChatMessages, sendChatMessage} from "../chatMessage/actions";
+import {fetchChatMessages, sendChatMessage, newMessageSuccess} from "../chatMessage/actions";
 import ChatMessage from "../chatMessage/ChatMessage";
-import io from 'socket.io-client';
 import isEmpty from 'lodash/isEmpty';
 import userUtility from "../../utils/userUtility";
-import CSSTransition from "../../components/CSSTransition";
+import {CHAT} from "../../constants/urlConstants";
+import io from '../../utils/socket';
+import ChatMessageList from "../chatMessage/ChatMessageList";
 
 class ChatContainer extends Component {
 
     componentDidMount(){
         this.props.fetchChatMessages(this.props.id);
-        this.socket = io.connect(process.env.REACT_APP_SOCKET_URL);
-        this.socket.on('general', (data) => {
-            console.log(data)
+        io.listen(`${CHAT}:${this.props.id}:message`, (payload) => {
+            this.props.newMessageSuccess(this.props.id, payload);
         })
     }
 
@@ -32,9 +32,9 @@ class ChatContainer extends Component {
         const {messages} = this.props;
         return (
             <div className="chat-container flexbox flexbox-column-fill flex-start">
-                <CSSTransition animation="fade" className="chat-body">
+                <ChatMessageList>
                     {messages.map(message => <ChatMessage key={message.id} isOwner={userUtility.isOwner(message.owner)} message={message}/>)}
-                </CSSTransition>
+                </ChatMessageList>
                 <NewMessageForm onSubmit={this.sendMessage}/>
             </div>
         )
@@ -52,6 +52,7 @@ const mapStateToProps = (state, props) => {
 };
 const mapDispatchToProps = (dispatch) => ({
     sendChatMessage : bindActionCreators(sendChatMessage, dispatch),
-    fetchChatMessages:bindActionCreators(fetchChatMessages, dispatch)
+    fetchChatMessages:bindActionCreators(fetchChatMessages, dispatch),
+    newMessageSuccess:bindActionCreators(newMessageSuccess, dispatch)
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer);

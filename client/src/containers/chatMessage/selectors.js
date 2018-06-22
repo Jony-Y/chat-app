@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-const getChatMessages = (state, chatID) => state.chatMessage.chatMessages.get(chatID);
+const getChatMessages = (state, chatID) => state.chatMessage.chatMessages[chatID];
 
 
 /**

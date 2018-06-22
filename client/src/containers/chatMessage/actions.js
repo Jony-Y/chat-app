@@ -9,7 +9,7 @@ function newMessageRequest() {
     }
 }
 
-function newMessageSuccess(chatID, message) {
+export function newMessageSuccess(chatID, message) {
     return {
         type: type.CHAT_NEW_MESSAGE_SUCCESS,
         chatId: chatID,
@@ -55,8 +55,7 @@ export function sendChatMessage(chatID, message) {
     return async dispatch => {
         dispatch(newMessageRequest());
         try{
-            const newMessage = await request(MESSAGE, {method:'POST', body: {chatId:chatID, body:message}});
-            dispatch(newMessageSuccess(newMessage, chatID));
+            await request(MESSAGE, {method:'POST', body: {chatId:chatID, body:message}});
         }catch (err) {
             dispatch(newMessageFailure(err));
         }
