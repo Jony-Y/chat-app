@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import './chat.css';
 import NewMessageForm from "./NewMessageForm";
-import {chatMessages} from "../chatMessage/selectors";
+import {chatMessages, isFetchingChatMessages} from "../chatMessage/selectors";
 import {fetchChatMessages, sendChatMessage, newMessageSuccess} from "../chatMessage/actions";
 import ChatMessage from "../chatMessage/ChatMessage";
 import isEmpty from 'lodash/isEmpty';
@@ -12,6 +12,8 @@ import userUtility from "../../utils/userUtility";
 import {CHAT} from "../../constants/urlConstants";
 import io from '../../utils/socket';
 import ChatMessageList from "../chatMessage/ChatMessageList";
+import CircularLoader from "../../components/loader/CircularLoader";
+import {lightGray} from "../../themes/colors";
 
 class ChatContainer extends Component {
 
@@ -29,10 +31,11 @@ class ChatContainer extends Component {
     };
 
     render(){
-        const {messages} = this.props;
+        const {messages, isFetching} = this.props;
         return (
             <div className="chat-container flexbox flexbox-column-fill flex-start">
                 <ChatMessageList>
+                    {isFetching && <CircularLoader size={30} thickness={4} style={{color:lightGray}}/>}
                     {messages.map(message => <ChatMessage key={message.id} isOwner={userUtility.isOwner(message.owner)} message={message}/>)}
                 </ChatMessageList>
                 <NewMessageForm onSubmit={this.sendMessage}/>
@@ -47,7 +50,8 @@ ChatContainer.propTypes = {
 
 const mapStateToProps = (state, props) => {
     return {
-        messages: chatMessages(state, props.id)
+        messages: chatMessages(state, props.id),
+        isFetching: isFetchingChatMessages(state)
     }
 };
 const mapDispatchToProps = (dispatch) => ({

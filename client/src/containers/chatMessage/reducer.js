@@ -26,6 +26,7 @@ export default (state = initialState, action) => {
 
         case types.CHAT_MESSAGES_SUCCESS:
             state.chatMessages[action.chatId] = action.messages.concat(state.chatMessages[action.chatId] || []);
+            state.isFetching = false;
             return {...state};
         default:
             return state;
