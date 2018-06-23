@@ -30,11 +30,12 @@ function chatMessagesRequest() {
     }
 }
 
-function chatMessagesSuccess(chatID, messages = []) {
+function chatMessagesSuccess(chatID, data = {}) {
     return {
         type: type.CHAT_MESSAGES_SUCCESS,
         chatId: chatID,
-        messages:messages
+        messages:data.messages || [],
+        count: data.count
     }
 }
 
@@ -71,8 +72,8 @@ export function fetchChatMessages(chatId, page = 0){
             if(!isEmpty(chatId)) {
                 dispatch(chatMessagesRequest());
             try {
-                const chatMessages = await request(`${CHAT}/${chatId}/${MESSAGE}`, {page: page});
-                dispatch(chatMessagesSuccess(chatId, chatMessages));
+                const data = await request(`${CHAT}/${chatId}/${MESSAGE}`, {page: page});
+                dispatch(chatMessagesSuccess(chatId, data));
             } catch (err) {
                 dispatch(chatMessagesFailure(err));
             }

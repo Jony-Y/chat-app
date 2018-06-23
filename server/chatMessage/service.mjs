@@ -5,7 +5,7 @@ export const saveChatMessage = (payload) => {
 };
 
 export const getChatMessages = (id, offset = 0) => {
-    return ChatMessage.find({chatId:id}).populate('owner').sort({createdAt:-1}).skip(50*offset).limit(50);
+    return ChatMessage.find({chatId:id}).populate('owner').sort('-createdAt').skip(50*offset).limit(50);
 };
 
 
@@ -19,4 +19,8 @@ export const deleteChatMessage = (id) => {
 
 export const getChatMessage = (id) => {
     return ChatMessage.findOne({_id:id});
+};
+
+export const getCount = (chatId) => {
+    return ChatMessage.count({chatId:chatId});
 };

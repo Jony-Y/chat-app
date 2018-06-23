@@ -6,10 +6,16 @@ const getChatMessage = (state) => state.chatMessage;
 /**
  *  get the chat messages according to the chat
  */
-export const chatMessages = createSelector(getChatMessages, (messages = []) => {
-    return  messages;
+export const chatMessages = createSelector(getChatMessages, (chat ={}) => {
+    return  chat.messages || [];
 });
 
+/**
+ *  get the chat messages count according to the chat
+ */
+export const chatMessagesPageCount = createSelector(getChatMessages, (chat ={}) => {
+    return  chat.pages;
+});
 
 /**
  *  get the chat messages according to the chat
@@ -17,4 +23,3 @@ export const chatMessages = createSelector(getChatMessages, (messages = []) => {
 export const isFetchingChatMessages = createSelector(getChatMessage, (state = []) => {
     return  state.isFetching;
 });
-

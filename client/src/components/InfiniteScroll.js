@@ -3,41 +3,54 @@ import PropTypes from 'prop-types';
 import CircularLoader from "./loader/CircularLoader";
 const offset = 200;
 
-@observer
 class InfiniteScroll extends Component {
     constructor(props){
         super(props);
         this.state = {currentPage: this.props.initialPage || 0, fetching: false};
-        this.container = React.createRef();
+        this.scrollRef = React.createRef();
     }
 
     componentDidMount() {
-        this.container.addEventListener('scroll', this.handleScrollEvent);
+        this.scrollRef.current.addEventListener('scroll', this.handleScrollEvent);
     }
     componentWillUnmount() {
-        this.container.removeEventListener('scroll', this.handleScrollEvent);
+        this.scrollRef.current.removeEventListener('scroll', this.handleScrollEvent);
+    }
+
+    async fetchNextPage(){
+        try {
+            this.setState(prevState => ({
+                currentPage: prevState.currentPage + 1,
+                fetching:true
+            }));
+            await this.props.onLoadMore(this.state.currentPage);
+            this.setState({fetching: false});
+        } catch (err) {
+            this.setState({fetching: false});
+        }
     }
 
     handleScrollEvent = async() => {
-        if (!this.fetching && this.props.pageCount > this.currentPage) {
-            let element = this.container;
-            if (element.scrollHeight - element.scrollTop - element.clientHeight <= offset) {
-                try {
-                    this.setState({fetching: true});
-                    await this.props.onLoadMore(++this.currentPage);
-                    this.setState({fetching: false});
-                } catch (err) {
-                    this.setState({fetching: false});
+        if (!this.fetching && this.props.pageCount > this.state.currentPage) {
+            let element = this.scrollRef.current;
+            if(this.props.direction === 'up'){
+                if (element.scrollTop <= 0) {
+                    await this.fetchNextPage();
+                }
+            }else{
+                if (element.scrollHeight - element.scrollTop - element.clientHeight <= offset) {
+                    await this.fetchNextPage();
                 }
             }
+
         }
     };
 
     render(){
-        const {className, children, style, direction} = this.props;
+        const {className, children, style, direction, id} = this.props;
         const {fetching, currentPage} = this.state;
         return (
-            <div ref={this.container} className={`flexbox-fill h-fill overflow-y-auto ${className}`} style={style}>
+            <div id={id} ref={this.scrollRef} className={`flexbox-fill h-fill overflow-y-auto ${className}`} style={style}>
                 {direction === 'up' && fetching && currentPage > 0 &&  <CircularLoader containerStyle={{width: "100%"}}/>}
                 {children}
                 {direction === 'down' && fetching && currentPage > 0 &&  <CircularLoader containerStyle={{width: "100%"}}/>}
@@ -53,6 +66,7 @@ InfiniteScroll.propTypes = {
     onLoadMore:PropTypes.func,
     loader:PropTypes.node,
     pageCount:PropTypes.number,
+    id:PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     direction:PropTypes.string.isRequired
 };
 

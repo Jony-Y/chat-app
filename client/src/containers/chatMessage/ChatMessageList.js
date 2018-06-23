@@ -1,26 +1,16 @@
 import React, {Component} from 'react';
 import CSSTransition from "../../components/CSSTransition";
+import InfiniteScroll from "../../components/InfiniteScroll";
 
 class ChatMessageList extends Component {
-
-    componentDidMount(){
-        this.scrollBottom();
-    }
-    componentDidUpdate(){
-        this.scrollBottom();
-    }
-    scrollBottom(){
-        let el = document.getElementById('chatMessageList');
-        el.scrollTop = el.scrollHeight;
-    };
     render(){
-        const {children} = this.props;
+        const {children, onFetchNext, pageCount, id} = this.props;
         return (
-            <div id="chatMessageList" className="chat-body">
+            <InfiniteScroll pageCount={pageCount} onLoadMore={onFetchNext} direction="up" className="chat-body" id={id} initialPage={0}>
                 <CSSTransition animation="fade">
                     {children}
                 </CSSTransition>
-            </div>
+            </InfiniteScroll>
         )
     }
 }

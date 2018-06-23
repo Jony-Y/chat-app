@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import './chat.css';
 import NewMessageForm from "./NewMessageForm";
-import {chatMessages, isFetchingChatMessages} from "../chatMessage/selectors";
+import {chatMessages, chatMessagesPageCount, isFetchingChatMessages} from "../chatMessage/selectors";
 import {fetchChatMessages, sendChatMessage, newMessageSuccess} from "../chatMessage/actions";
 import ChatMessage from "../chatMessage/ChatMessage";
 import isEmpty from 'lodash/isEmpty';
@@ -18,23 +18,47 @@ import {lightGray} from "../../themes/colors";
 class ChatContainer extends Component {
 
     componentDidMount(){
-        this.props.fetchChatMessages(this.props.id);
-        io.listen(`${CHAT}:${this.props.id}:message`, (payload) => {
-            this.props.newMessageSuccess(this.props.id, payload);
-        })
+        this.initChat(this.props.id);
     }
 
-    sendMessage = (message) => {
+    componentDidUpdate(prevProps){
+        if(isEmpty(prevProps.messages) && !isEmpty(this.props.messages)){
+            this.scrollBottom();
+        }
+
+        if(!isEmpty(this.props.id) && this.props.id !== prevProps.id){
+            this.initChat(this.props.id);
+            this.scrollBottom();
+        }
+    }
+
+    initChat = (id) => {
+        this.props.fetchChatMessages(id);
+        io.listen(`${CHAT}:${id}:message`, (payload) => {
+            this.props.newMessageSuccess(id, payload);
+        })
+    };
+    scrollBottom = () => {
+        let el = document.getElementById('chatMessageList');
+        el.scrollTop = el.scrollHeight;
+    };
+
+    sendMessage = async(message) => {
       if(!isEmpty(message)){
-          this.props.sendChatMessage(this.props.id, message);
+          await this.props.sendChatMessage(this.props.id, message);
+          this.scrollBottom();
       }
     };
 
+    fetchNextPage = (nextPage) => {
+        this.props.fetchChatMessages(this.props.id, nextPage);
+    };
+
     render(){
-        const {messages, isFetching} = this.props;
+        const {messages, isFetching, pageCount} = this.props;
         return (
             <div className="chat-container flexbox flexbox-column-fill flex-start">
-                <ChatMessageList>
+                <ChatMessageList id="chatMessageList" onFetchNext={this.fetchNextPage} pageCount={pageCount}>
                     {isFetching && <CircularLoader size={30} thickness={4} style={{color:lightGray}}/>}
                     {messages.map(message => <ChatMessage key={message.id} isOwner={userUtility.isOwner(message.owner)} message={message}/>)}
                 </ChatMessageList>
@@ -51,6 +75,7 @@ ChatContainer.propTypes = {
 const mapStateToProps = (state, props) => {
     return {
         messages: chatMessages(state, props.id),
+        pageCount: chatMessagesPageCount(state, props.id),
         isFetching: isFetchingChatMessages(state)
     }
 };

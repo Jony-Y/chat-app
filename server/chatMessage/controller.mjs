@@ -1,4 +1,4 @@
-import {deleteChatMessage, getChatMessage, getChatMessages, saveChatMessage} from "./service";
+import {deleteChatMessage, getChatMessage, getChatMessages, getCount, saveChatMessage} from "./service";
 import {SOCKET_MESSAGE_ROOM, CHAT} from "../utils/constants";
 import io from '../utils/socket';
 
@@ -30,7 +30,9 @@ export const getAll = async(req, res) => {
     try{
         let messages = await getChatMessages(req.params.id, req.query.page);
         messages.sort((a,b) => a.createdAt - b.createdAt);
-        return res.json(messages);
+        let count = await getCount(req.params.id);
+        console.log(count);
+        return res.json({messages:messages, count:count});
     }catch(err){
         console.log(err);
         return res.status(500).json(err);
