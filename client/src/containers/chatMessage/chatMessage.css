@@ -14,6 +14,8 @@
     justify-content: flex-end;
     font-size: 9px;
     color: #b3b3b3; }
+  .chat-message .body {
+    word-break: break-all; }
   .chat-message .user {
     color: #999999;
     font-size: 12px; }
