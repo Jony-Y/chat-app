@@ -14,21 +14,27 @@ import io from '../../utils/socket';
 import ChatMessageList from "../chatMessage/ChatMessageList";
 import CircularLoader from "../../components/loader/CircularLoader";
 import {lightGray} from "../../themes/colors";
-
+import ScrollWatch from "../../utils/ScrollWatch";
+const OFFSET = 5;
 class ChatContainer extends Component {
 
     componentDidMount(){
         this.initChat(this.props.id);
+        this.scroller = new ScrollWatch('#chatMessageList');
     }
 
     componentDidUpdate(prevProps){
         if(isEmpty(prevProps.messages) && !isEmpty(this.props.messages)){
-            this.scrollBottom();
+            this.scroller.scrollBottom();
+        }
+
+        if(!isEmpty(prevProps.messages) && this.props.messages.length -  prevProps.messages.length >= OFFSET){
+            this.scroller.scrollToPreviousPosition();
         }
 
         if(!isEmpty(this.props.id) && this.props.id !== prevProps.id){
             this.initChat(this.props.id);
-            this.scrollBottom();
+            this.scroller.scrollBottom();
         }
     }
 
@@ -38,20 +44,17 @@ class ChatContainer extends Component {
             this.props.newMessageSuccess(id, payload);
         })
     };
-    scrollBottom = () => {
-        let el = document.getElementById('chatMessageList');
-        el.scrollTop = el.scrollHeight;
-    };
 
     sendMessage = async(message) => {
       if(!isEmpty(message)){
           await this.props.sendChatMessage(this.props.id, message);
-          this.scrollBottom();
+          this.scroller.scrollBottom();
       }
     };
 
     fetchNextPage = (nextPage) => {
         this.props.fetchChatMessages(this.props.id, nextPage);
+        this.scroller.savePosition();
     };
 
     render(){
