@@ -7,8 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:server":"cd server && npm start",
     "start:client":"cd client && npm start",
-    "start":"npm run start:server & npm run start:client"
+    "install:server":"cd server && yarn install",
+    "install:client":"cd client && yarn install",
+    "start":"npm run start:server & npm run start:client",
+    "install":"npm run install:server & npm run install:client"
   },
-  "author": "",
+  "author": "Jonathan Yehie",
   "license": "MIT"
 }
