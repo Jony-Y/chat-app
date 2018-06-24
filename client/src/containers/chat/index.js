@@ -19,30 +19,24 @@ const OFFSET = 5;
 class ChatContainer extends Component {
 
     componentDidMount(){
-        this.initChat(this.props.id);
         this.scroller = new ScrollWatch('#chatMessageList');
+        this.initChat(this.props.id);
     }
 
     componentDidUpdate(prevProps){
-        if(isEmpty(prevProps.messages) && !isEmpty(this.props.messages)){
-            this.scroller.scrollBottom();
-        }
-
-        if(!isEmpty(prevProps.messages) && this.props.messages.length -  prevProps.messages.length >= OFFSET){
-            this.scroller.scrollToPreviousPosition();
-        }
-
         if(!isEmpty(this.props.id) && this.props.id !== prevProps.id){
             this.initChat(this.props.id);
             this.scroller.scrollBottom();
         }
     }
 
-    initChat = (id) => {
-        this.props.fetchChatMessages(id);
+    initChat = async(id) => {
+        await this.props.fetchChatMessages(id);
         io.listen(`${CHAT}:${id}:message`, (payload) => {
             this.props.newMessageSuccess(id, payload);
-        })
+            this.scroller.scrollBottom();
+        });
+        this.scroller.scrollBottom();
     };
 
     sendMessage = async(message) => {
@@ -52,9 +46,10 @@ class ChatContainer extends Component {
       }
     };
 
-    fetchNextPage = (nextPage) => {
-        this.props.fetchChatMessages(this.props.id, nextPage);
+    fetchNextPage = async(nextPage) => {
         this.scroller.savePosition();
+        await this.props.fetchChatMessages(this.props.id, nextPage);
+        this.scroller.scrollToPreviousPosition();
     };
 
     render(){
