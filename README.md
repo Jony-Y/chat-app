@@ -17,7 +17,7 @@ This is an open project for whom ever wants to use or play with.
 
 ### TODO:
  - missing notification for offline and users not in room
- - Add flow check to all logic based fuctions 
+ - Add flow check to all logic based functions 
  - Add unit test for both BE and FE
  
  
