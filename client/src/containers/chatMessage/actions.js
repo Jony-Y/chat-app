@@ -73,6 +73,7 @@ export function fetchChatMessages(chatId, page = 0){
                 dispatch(chatMessagesRequest());
             try {
                 const data = await request(`${CHAT}/${chatId}/${MESSAGE}`, {page: page});
+                console.log(data);
                 dispatch(chatMessagesSuccess(chatId, data));
             } catch (err) {
                 dispatch(chatMessagesFailure(err));

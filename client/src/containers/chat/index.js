@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import './chat.css';
 import NewMessageForm from "./NewMessageForm";
-import {chatMessages, chatMessagesPageCount, isFetchingChatMessages} from "../chatMessage/selectors";
+import {chatMessages, chatMessagesPageCount} from "../chatMessage/selectors";
 import {fetchChatMessages, sendChatMessage, newMessageSuccess} from "../chatMessage/actions";
 import ChatMessage from "../chatMessage/ChatMessage";
 import isEmpty from 'lodash/isEmpty';
@@ -12,8 +12,6 @@ import userUtility from "../../utils/userUtility";
 import {CHAT} from "../../constants/urlConstants";
 import io from '../../utils/Socket';
 import ChatMessageList from "../chatMessage/ChatMessageList";
-import CircularLoader from "../../components/loader/CircularLoader";
-import {lightGray} from "../../themes/colors";
 import ScrollWatch from "../../utils/ScrollWatch";
 import {markAllAsRead} from "./actions";
 import {hasUnreadMessages} from "./selectors";
@@ -60,11 +58,10 @@ class ChatContainer extends Component {
     };
 
     render(){
-        const {messages, isFetching, pageCount} = this.props;
+        const {messages, pageCount} = this.props;
         return (
             <div className="chat-container flexbox flexbox-column-fill flex-start">
                 <ChatMessageList id="chatMessageList" onFetchNext={this.fetchNextPage} pageCount={pageCount}>
-                    {isFetching && <CircularLoader size={30} thickness={4} className="loader-center" style={{color:lightGray}}/>}
                     {messages.map(message => <ChatMessage key={message.id} isOwner={userUtility.isOwner(message.owner)} message={message}/>)}
                 </ChatMessageList>
                 <NewMessageForm onFocus={this.focused} onSubmit={this.sendMessage}/>
@@ -81,8 +78,7 @@ const mapStateToProps = (state, props) => {
     return {
         messages: chatMessages(state, props.id),
         hasUnread: hasUnreadMessages(state, props.id),
-        pageCount: chatMessagesPageCount(state, props.id),
-        isFetching: isFetchingChatMessages(state)
+        pageCount: chatMessagesPageCount(state, props.id)
     }
 };
 const mapDispatchToProps = (dispatch) => ({

@@ -32,8 +32,14 @@ export default (state = initialState, action) => {
             return {...state};
 
         case types.CHAT_MESSAGES_SUCCESS:
+            let messages = [];
+            if(!action.page){
+                messages = (hasChat(state,action.chatId)?state.chatMessages[action.chatId].messages: []).concat(action.messages);
+            }else{
+                messages = action.messages.concat(hasChat(state,action.chatId)?state.chatMessages[action.chatId].messages: []);
+            }
             state.chatMessages[action.chatId] = {
-                messages:action.messages.concat(hasChat(state,action.chatId)?state.chatMessages[action.chatId].messages: []),
+                messages:messages,
                 pages: Math.floor(action.count/50)
             };
             state.isFetching = false;
