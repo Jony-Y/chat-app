@@ -10,12 +10,11 @@ import ChatMessage from "../chatMessage/ChatMessage";
 import isEmpty from 'lodash/isEmpty';
 import userUtility from "../../utils/userUtility";
 import {CHAT} from "../../constants/urlConstants";
-import io from '../../utils/socket';
+import io from '../../utils/Socket';
 import ChatMessageList from "../chatMessage/ChatMessageList";
 import CircularLoader from "../../components/loader/CircularLoader";
 import {lightGray} from "../../themes/colors";
 import ScrollWatch from "../../utils/ScrollWatch";
-const OFFSET = 5;
 class ChatContainer extends Component {
 
     componentDidMount(){
@@ -80,6 +79,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => ({
     sendChatMessage : bindActionCreators(sendChatMessage, dispatch),
     fetchChatMessages:bindActionCreators(fetchChatMessages, dispatch),
-    newMessageSuccess:bindActionCreators(newMessageSuccess, dispatch)
+    newMessageSuccess:bindActionCreators(newMessageSuccess, dispatch),
+
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer);

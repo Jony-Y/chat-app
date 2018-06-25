@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
-import socket from './utils/socket';
+import socket from './utils/Socket';
 import mongoose from 'mongoose';
 import routes from './router';
 import {mongoUrl, port} from './config';

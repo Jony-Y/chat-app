@@ -6,17 +6,18 @@ import SearchFilter from "../../components/inputs/SearchFilter";
 import VerticalDivider from "../../components/VerticalDivder";
 import ChatList from "./ChatList";
 import ChatListItem from "./ChatListItem";
+import {deepEquals} from "../../utils/commonUtility";
 import isEmpty from "lodash/isEmpty";
 
 class ChatPicker extends Component {
     constructor(props){
         super(props);
-        this.state = {filteredChats:props.chats ||  []};
+        this.state = {filteredChats:props.chats ||  [], filter:''};
     }
 
     componentDidUpdate(prevProps){
-        if(prevProps.chats.length !== this.props.chats.length && isEmpty(this.state.filterChats)){
-            this.setState({filteredChats:this.props.chats});
+        if(!deepEquals(prevProps.chats, this.props.chats)){
+            this.filterChats(this.state.filter);
         }
         if(prevProps.activeChat !== this.props.activeChat){
             this.setState({activeChat:this.props.activeChat});
@@ -24,7 +25,8 @@ class ChatPicker extends Component {
     }
 
     filterChats = (filter) => {
-        this.setState({filteredChats: this.props.chats.filter(chat => chat.name.toLowerCase().includes(filter.toLowerCase()))});
+        let filteredItems = !isEmpty(filter)?this.props.chats.filter(chat => chat.name.toLowerCase().includes(filter.toLowerCase())):this.props.chats;
+        this.setState({filter:filter, filteredChats: filteredItems});
     };
 
     render(){

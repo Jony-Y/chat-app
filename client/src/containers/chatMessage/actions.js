@@ -13,7 +13,7 @@ export function newMessageSuccess(chatID, message) {
     return {
         type: type.CHAT_NEW_MESSAGE_SUCCESS,
         chatId: chatID,
-        message:message
+        message:message,
     }
 }
 

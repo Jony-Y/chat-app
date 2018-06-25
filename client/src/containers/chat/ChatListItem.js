@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import MenuItem from "../../components/menu/MenuItem";
+import Badge from "../../components/Badge";
 
 class ChatListItem extends Component {
 
@@ -11,7 +12,12 @@ class ChatListItem extends Component {
     render(){
         const {chat, isSelected} = this.props;
         return(
-            <MenuItem separator onClick={this.handleItemClick} selected={isSelected}>{chat.name}</MenuItem>
+            <MenuItem separator onClick={this.handleItemClick} selected={isSelected}>
+                <div className="flexbox-fill flex-space-between">
+                    <div className="flex-center-start">{chat.name}</div>
+                    {chat.unreadCount && <Badge value={chat.unreadCount}/>}
+                </div>
+            </MenuItem>
         )
     }
 }

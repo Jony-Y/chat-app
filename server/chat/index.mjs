@@ -5,8 +5,9 @@ let routes = express.Router();
 
 routes.post('',post);
 routes.get('/:id',get);
-routes.get('/:id/message',getChatMessages);
 routes.get('', getAll);
 routes.delete('/:id', remove);
 
+//chat messages
+routes.get('/:id/message',getChatMessages);
 export default routes;

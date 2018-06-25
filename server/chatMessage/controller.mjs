@@ -1,6 +1,7 @@
 import {deleteChatMessage, getChatMessage, getChatMessages, getCount, saveChatMessage} from "./service";
-import {SOCKET_MESSAGE_ROOM, CHAT} from "../utils/constants";
-import io from '../utils/socket';
+import {CHAT} from "../utils/constants";
+import io from '../utils/Socket';
+import {notifyChatParticipants} from "../userChatNotification/controller";
 
 /**
  * Create chat message
@@ -11,7 +12,7 @@ import io from '../utils/socket';
 export const post = async(req, res) => {
     try {
         const message = await saveChatMessage({...req.body, owner:req.user.id});
-        io.emitRoom(`${CHAT}:${message.chatId}`, message);
+        await notifyChatParticipants(message);
         console.log('message created');
         return res.json(message);
     }catch (err){

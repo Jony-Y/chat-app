@@ -1,5 +1,6 @@
 import socket from "socket.io";
-import {SOCKET_GENERAL_ROOM, SOCKET_JOIN_ROOM, SOCKET_LEAVE_ROOM, SOCKET_MESSAGE_ROOM} from "./constants";
+import {SOCKET_JOIN_ROOM, SOCKET_LEAVE_ROOM} from "./constants";
+import isEmpty from "lodash/isEmpty";
 
 class Socket{
     constructor(){
@@ -12,9 +13,7 @@ class Socket{
     connect(server){
         this.io = socket(server);
         this.io.on('connection',(socket) => {
-            socket.on(SOCKET_GENERAL_ROOM, (data) => {
-                this.io.emit(`${SOCKET_GENERAL_ROOM}:${data.userId}`, data.payload);
-            });
+            socket.userId = socket.handshake.query.userId;
 
             socket.on(SOCKET_JOIN_ROOM, (room) => {
                 this.joinRoom(socket, room);
@@ -61,10 +60,22 @@ class Socket{
     /**
      * Get the members of a room
      * @param room  {String}    Room name
-     * @returns {Array}
+     * @returns {Array} User array ids connected to room
      */
     getRoomMembers(room){
-        return this.io.sockets.adapter.rooms[room]
+        return Object.keys(this.io.sockets.adapter.rooms[room].sockets).reduce((clients, socket)=>{
+            clients.push(this.io.sockets.connected[socket].userId);
+            return clients;
+        },[]);
+    }
+
+    /**
+     * Check if room exists
+     * @param room  {String}    Room name
+     * @returns {Boolean} return whether or not room exists/is empty
+     */
+    hasRoom(room){
+        return !isEmpty(this.io.sockets.adapter.rooms[room])
     }
 
     get socket(){

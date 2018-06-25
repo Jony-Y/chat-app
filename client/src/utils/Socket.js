@@ -4,11 +4,14 @@ import {SOCKET_GENERAL_ROOM, SOCKET_JOIN_ROOM, SOCKET_LEAVE_ROOM} from "../const
 
 class Socket {
     constructor() {
-        this.io = io.connect(process.env.REACT_APP_SOCKET_URL);
+        this.io = io.connect(process.env.REACT_APP_SOCKET_URL, {
+            query: `userId=${userUtility.id}`,
+            'sync disconnect on unload': true
+        });
     }
 
-    subscribeGeneral(cb){
-        this.io.on(`${SOCKET_GENERAL_ROOM}:${userUtility.id}`, (payload)=>{cb(payload)});
+    subscribeGeneral(){
+        this.io.emit(SOCKET_JOIN_ROOM, `${SOCKET_GENERAL_ROOM}:${userUtility.id}`);
     }
 
     subscribeRoom(room){

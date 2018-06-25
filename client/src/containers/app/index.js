@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {logout, fetchUsers} from '../user/actions';
 import {bindActionCreators} from 'redux';
-import io from '../../utils/socket';
+import io from '../../utils/Socket';
 import './app.css';
 import ChatContainer from "../chat";
 import {getQueryParams, go} from "../../utils/navigationUtility";
@@ -14,10 +14,11 @@ import FaEdit from 'react-icons/lib/fa/edit';
 import withDrawer from "../../components/drawer/withDrawer";
 import Drawer from "../../components/drawer/Drawer";
 import {chats} from "../chat/selectors";
-import {fetchUserChats} from '../chat/actions';
+import {clearUnread, fetchUserChats, incrementUnread} from '../chat/actions';
 import ChatPicker from "../chat/ChatPicker";
 import CreateNewChatFormContainer from "../chat/CreateNewChatFormContainer";
 import {CHAT} from "../../constants/urlConstants";
+import {SOCKET_GENERAL_ROOM} from '../../constants/constants';
 
 class AppContainer extends Component {
 
@@ -29,10 +30,15 @@ class AppContainer extends Component {
         if(!userUtility.isLoggedIn){
             go('/auth');
         }
-        io.subscribeGeneral((payload)=> console.log(payload));
+
+        io.subscribeGeneral();
+        io.listen(`${SOCKET_GENERAL_ROOM}:${userUtility.id}:message`, (payload)=>{
+            this.props.incrementUnread(payload.chatId);
+        });
         if(this.state.activeChat){
             io.subscribeRoom(`${CHAT}:${this.state.activeChat}`);
         }
+
         this.props.fetchUsers();
         this.props.fetchUserChats();
     }
@@ -40,6 +46,7 @@ class AppContainer extends Component {
     setActiveChat = (chatID) => {
         if(this.state.activeChat){
             io.unsubscribeRoom(`${CHAT}:${this.state.activeChat}`);
+            this.props.clearUnread(chatID);
         }
         this.setState({activeChat:chatID});
         io.subscribeRoom(`${CHAT}:${chatID}`);
@@ -80,7 +87,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
    logout:bindActionCreators(logout, dispatch),
    fetchUsers: bindActionCreators(fetchUsers, dispatch),
-   fetchUserChats: bindActionCreators(fetchUserChats, dispatch)
+   fetchUserChats: bindActionCreators(fetchUserChats, dispatch),
+   incrementUnread: bindActionCreators(incrementUnread, dispatch),
+   clearUnread: bindActionCreators(clearUnread, dispatch)
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withDrawer(AppContainer));

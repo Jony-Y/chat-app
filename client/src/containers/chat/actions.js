@@ -55,6 +55,20 @@ function _processUserChats(chats) {
     })
 
 }
+
+export function incrementUnread(chatId) {
+    return {
+        type: type.CHAT_INCREMENT_UNREAD,
+        chatId: chatId
+    }
+}
+
+export function clearUnread(chatId) {
+    return {
+        type: type.CHAT_CLEAR_UNREAD,
+        chatId: chatId
+    }
+}
 /**
  * Send a new message to chat group
  * @param payload {Object}  The payload to create new chat

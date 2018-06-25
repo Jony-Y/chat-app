@@ -27,3 +27,13 @@ export function decodeToken(token){
     });
 
 }
+
+/**
+ * Compare diff between two flat arrays
+ * @param arr1  {Array} Lead array - check unique on it
+ * @param arr2  {Array} Comparable Array
+ */
+export function arrayDiff(arr1=[], arr2=[]) {
+    let set = new Set(arr2);
+    return arr1.filter((item) => !set.has(typeof item === 'object'?`${item}`:item));
+}
