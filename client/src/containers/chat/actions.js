@@ -1,6 +1,6 @@
 import * as type from './actionTypes';
 import request from "../../utils/request";
-import {CHAT} from "../../constants/urlConstants";
+import {CHAT, USER_CHAT_NOTIFICATION} from "../../constants/urlConstants";
 import isEmpty from "lodash/isEmpty";
 import userUtility from "../../utils/userUtility";
 
@@ -63,7 +63,7 @@ export function incrementUnread(chatId) {
     }
 }
 
-export function clearUnread(chatId) {
+function clearUnread(chatId) {
     return {
         type: type.CHAT_CLEAR_UNREAD,
         chatId: chatId
@@ -84,6 +84,27 @@ export function createChat(payload) {
             return newChat;
         }catch (err) {
             dispatch(chatsRequestError())
+        }
+    }
+}
+
+
+/**
+ * Send a new message to chat group
+ * @param chatId {String}  The chat to mark as read
+ * @returns {Function}
+ */
+export function markAllAsRead(chatId) {
+    return async (dispatch, getState) => {
+        let chat = getState().chat.chats.get(chatId);
+        if (!isEmpty(chat) && chat.unreadCount > 0) {
+            dispatch(ChatRequest());
+            try {
+                await request(USER_CHAT_NOTIFICATION, {chatId: chatId});
+                dispatch(clearUnread(chatId));
+            } catch (err) {
+                dispatch(chatsRequestError())
+            }
         }
     }
 }

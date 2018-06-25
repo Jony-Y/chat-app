@@ -15,6 +15,8 @@ import ChatMessageList from "../chatMessage/ChatMessageList";
 import CircularLoader from "../../components/loader/CircularLoader";
 import {lightGray} from "../../themes/colors";
 import ScrollWatch from "../../utils/ScrollWatch";
+import {markAllAsRead} from "./actions";
+import {hasUnreadMessages} from "./selectors";
 class ChatContainer extends Component {
 
     componentDidMount(){
@@ -51,6 +53,12 @@ class ChatContainer extends Component {
         this.scroller.scrollToPreviousPosition();
     };
 
+    focused = () => {
+        if(this.props.hasUnread) {
+            this.props.markAllAsRead(this.props.id);
+        }
+    };
+
     render(){
         const {messages, isFetching, pageCount} = this.props;
         return (
@@ -59,7 +67,7 @@ class ChatContainer extends Component {
                     {isFetching && <CircularLoader size={30} thickness={4} style={{color:lightGray}}/>}
                     {messages.map(message => <ChatMessage key={message.id} isOwner={userUtility.isOwner(message.owner)} message={message}/>)}
                 </ChatMessageList>
-                <NewMessageForm onSubmit={this.sendMessage}/>
+                <NewMessageForm onFocus={this.focused} onSubmit={this.sendMessage}/>
             </div>
         )
     }
@@ -72,6 +80,7 @@ ChatContainer.propTypes = {
 const mapStateToProps = (state, props) => {
     return {
         messages: chatMessages(state, props.id),
+        hasUnread: hasUnreadMessages(state, props.id),
         pageCount: chatMessagesPageCount(state, props.id),
         isFetching: isFetchingChatMessages(state)
     }
@@ -80,6 +89,7 @@ const mapDispatchToProps = (dispatch) => ({
     sendChatMessage : bindActionCreators(sendChatMessage, dispatch),
     fetchChatMessages:bindActionCreators(fetchChatMessages, dispatch),
     newMessageSuccess:bindActionCreators(newMessageSuccess, dispatch),
+    markAllAsRead: bindActionCreators(markAllAsRead, dispatch)
 
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer);

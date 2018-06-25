@@ -14,7 +14,7 @@ import FaEdit from 'react-icons/lib/fa/edit';
 import withDrawer from "../../components/drawer/withDrawer";
 import Drawer from "../../components/drawer/Drawer";
 import {chats} from "../chat/selectors";
-import {clearUnread, fetchUserChats, incrementUnread} from '../chat/actions';
+import {markAllAsRead, fetchUserChats, incrementUnread} from '../chat/actions';
 import ChatPicker from "../chat/ChatPicker";
 import CreateNewChatFormContainer from "../chat/CreateNewChatFormContainer";
 import {CHAT} from "../../constants/urlConstants";
@@ -46,7 +46,7 @@ class AppContainer extends Component {
     setActiveChat = (chatID) => {
         if(this.state.activeChat){
             io.unsubscribeRoom(`${CHAT}:${this.state.activeChat}`);
-            this.props.clearUnread(chatID);
+            this.props.markAllAsRead(chatID);
         }
         this.setState({activeChat:chatID});
         io.subscribeRoom(`${CHAT}:${chatID}`);
@@ -89,7 +89,7 @@ const mapDispatchToProps = (dispatch) => ({
    fetchUsers: bindActionCreators(fetchUsers, dispatch),
    fetchUserChats: bindActionCreators(fetchUserChats, dispatch),
    incrementUnread: bindActionCreators(incrementUnread, dispatch),
-   clearUnread: bindActionCreators(clearUnread, dispatch)
+   markAllAsRead: bindActionCreators(markAllAsRead, dispatch)
 
 });
 

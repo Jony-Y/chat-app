@@ -15,7 +15,7 @@ const baseStyle = {
 
 const Badge = ({value, style, className}) => (
     <CSSTransition animation="pop" className="flexbox">
-        {value && <div key={1} className={`pop-in ${className}`} style={Object.assign({}, baseStyle, style)}>{value}</div>}
+        {value > 0 && <div key={1} className={`pop-in ${className}`} style={Object.assign({}, baseStyle, style)}>{value}</div>}
     </CSSTransition>
 );
 

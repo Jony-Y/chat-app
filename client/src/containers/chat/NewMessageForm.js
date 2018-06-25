@@ -21,9 +21,10 @@ class NewMessageForm extends Component {
 
     render(){
         const {message} = this.state;
+        const {onFocus} = this.props;
         return(
             <form noValidate onSubmit={this.submit} className="flexbox-fill chat-bottom-bar flex-center">
-                <Input onChange={this.setMessage} className="w-fill" placeholder="Type message here..." value={message}/>
+                <Input autoFocus={true} onFocus={onFocus} onChange={this.setMessage} className="w-fill" placeholder="Type message here..." value={message}/>
                 <IconButton containerClass="p-l-15" onClick={this.submit}><MdSend style={{fontSize:30}}/></IconButton>
             </form>
         )
@@ -31,7 +32,8 @@ class NewMessageForm extends Component {
 }
 
 NewMessageForm.propTypes = {
-    onSubmit:PropTypes.func.isRequired
+    onSubmit:PropTypes.func.isRequired,
+    onFocus:PropTypes.func.isRequired
 };
 
 export default NewMessageForm;
