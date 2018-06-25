@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import CircularLoader from "./loader/CircularLoader";
+import {lightGray} from "../themes/colors";
 const offset = 200;
 
 class InfiniteScroll extends Component {
@@ -51,9 +52,9 @@ class InfiniteScroll extends Component {
         const {fetching, currentPage} = this.state;
         return (
             <div id={id} ref={this.scrollRef} className={`flexbox-fill h-fill overflow-y-auto ${className}`} style={style}>
-                {direction === 'up' && fetching && currentPage > 0 &&  <CircularLoader containerStyle={{width: "100%"}}/>}
+                {direction === 'up' && fetching && currentPage > 0 &&  <CircularLoader size={30} thickness={4} style={{color:lightGray}}/>}
                 {children}
-                {direction === 'down' && fetching && currentPage > 0 &&  <CircularLoader containerStyle={{width: "100%"}}/>}
+                {direction === 'down' && fetching && currentPage > 0 &&  <CircularLoader size={30} thickness={4} style={{color:lightGray}}/>}
             </div>
         )
     }

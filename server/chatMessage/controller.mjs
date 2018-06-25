@@ -1,6 +1,4 @@
 import {deleteChatMessage, getChatMessage, getChatMessages, getCount, saveChatMessage} from "./service";
-import {CHAT} from "../utils/constants";
-import io from '../utils/Socket';
 import {notifyChatParticipants} from "../userChatNotification/controller";
 
 /**
@@ -30,7 +28,7 @@ export const post = async(req, res) => {
 export const getAll = async(req, res) => {
     try{
         let messages = await getChatMessages(req.params.id, req.query.page);
-        messages.sort((a,b) => a.createdAt - b.createdAt);
+        messages.sort((a,b) => new Date(a.createdAt) - new Date(b.createdAt));
         let count = await getCount(req.params.id);
         console.log(count);
         return res.json({messages:messages, count:count});

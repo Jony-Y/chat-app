@@ -64,7 +64,7 @@ class ChatContainer extends Component {
         return (
             <div className="chat-container flexbox flexbox-column-fill flex-start">
                 <ChatMessageList id="chatMessageList" onFetchNext={this.fetchNextPage} pageCount={pageCount}>
-                    {isFetching && <CircularLoader size={30} thickness={4} style={{color:lightGray}}/>}
+                    {isFetching && <CircularLoader size={30} thickness={4} className="loader-center" style={{color:lightGray}}/>}
                     {messages.map(message => <ChatMessage key={message.id} isOwner={userUtility.isOwner(message.owner)} message={message}/>)}
                 </ChatMessageList>
                 <NewMessageForm onFocus={this.focused} onSubmit={this.sendMessage}/>
