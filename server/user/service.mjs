@@ -1,7 +1,7 @@
 import User from "./model";
 
 export const saveUser = (payload) => {
-    return new User(payload).save();
+    return User(payload).save();
 };
 
 export const getAllUsers = () => {

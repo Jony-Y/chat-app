@@ -4,7 +4,7 @@
   border-style: none;
   padding-left: 15px; }
   .base-input:focus {
-    outline: none; }
+    outline: none !important; }
 
 .base-input.sm {
   height: 36px; }
@@ -15,3 +15,6 @@
   border-radius: 20px;
   padding-left: 10px;
   padding-right: 10px; }
+  .filter-input .form-control:focus {
+    border-color: transparent;
+    box-shadow: none; }
