@@ -1,4 +1,4 @@
-import {getUnreadUserChatNotificaions, markUserChatNotificationAsRead, saveUnreadUserChatNotification} from "./service";
+import {getUnreadUserChatNotifications, markUserChatNotificationAsRead, saveUnreadUserChatNotification} from "./service";
 import {CHAT, SOCKET_GENERAL_ROOM} from "../utils/constants";
 import io from '../utils/Socket';
 import {getChatParticipants} from "../chat/service";
@@ -18,7 +18,9 @@ export const notifyChatParticipants = async(message) => {
         const outOfRoomParticipants = arrayDiff(chatParticipants, roomParticipants);
         outOfRoomParticipants.forEach(async(participant) => {
             if(!io.hasRoom(`${SOCKET_GENERAL_ROOM}:${participant}`)){
-             await saveUnreadUserChatNotification(participant,chatId);
+                console.log(`saving unread notification count chat: ${chatId} participant: ${participant}`);
+                const resp = await saveUnreadUserChatNotification(chatId, participant);
+                console.log(resp);
             }else{
                 io.emitRoom(`${SOCKET_GENERAL_ROOM}:${participant}`, message);
             }
@@ -37,7 +39,8 @@ export const notifyChatParticipants = async(message) => {
  */
 export const getAll = async(req, res) => {
     try{
-        let unreadUserChatNotifications = await getUnreadUserChatNotificaions(req.userId, req.params.chatId);
+        console.log(`fetching unread notifications for user ${req.user.id}`);
+        let unreadUserChatNotifications = await getUnreadUserChatNotifications(req.user.id);
         return res.json(unreadUserChatNotifications);
     }catch(err){
         console.log(err);
@@ -53,7 +56,8 @@ export const getAll = async(req, res) => {
  */
 export const markAsRead = async(req, res) => {
     try{
-        await markUserChatNotificationAsRead(req,userId, res.params.chatId);
+        await markUserChatNotificationAsRead(req.user.id, req.body.chatId);
+        console.log(`mark unread notifications as read for chat ${req.body.chatId}`);
         return res.json({success:true});
     }catch (err) {
         console.log(err);

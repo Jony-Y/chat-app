@@ -31,10 +31,10 @@ export default (state = initialState, action) => {
             return {...state, chats:state.chats.set(action.chat.id, action.chat)};
         case CHAT_INCREMENT_UNREAD:
             let unreadCount = state.chats.get(action.chatId).unreadCount || 0;
-            return {...state, chats:state.chats.set(action.chatId, {...state.chats.get(action.chatId), unreadCount: unreadCount+1})};
+            return {...state, chats:state.chats.set(action.chatId, {...state.chats.get(action.chatId), unreadCount: unreadCount+ action.count})};
 
         case CHAT_CLEAR_UNREAD:
-            return {...state, chats: state.chats.set(action.chatId, Object.assign({},state.chats.get(action.chatId), {unreadCount: undefined}))};
+            return {...state, chats: state.chats.set(action.chatId, {...state.chats.get(action.chatId), unreadCount: 0})};
         default:
             return state;
     }

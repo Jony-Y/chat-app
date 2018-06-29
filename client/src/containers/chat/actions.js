@@ -1,6 +1,6 @@
 import * as type from './actionTypes';
 import request from "../../utils/request";
-import {CHAT, USER_CHAT_NOTIFICATION} from "../../constants/urlConstants";
+import {CHAT, MARK_AS_READ, USER_CHAT_NOTIFICATION} from "../../constants/urlConstants";
 import isEmpty from "lodash/isEmpty";
 import userUtility from "../../utils/userUtility";
 
@@ -56,10 +56,11 @@ function _processUserChats(chats) {
 
 }
 
-export function incrementUnread(chatId) {
+export function incrementUnread(chatId, count = 1) {
     return {
         type: type.CHAT_INCREMENT_UNREAD,
-        chatId: chatId
+        chatId: chatId,
+        count:count
     }
 }
 
@@ -100,7 +101,7 @@ export function markAllAsRead(chatId) {
         if (!isEmpty(chat) && chat.unreadCount > 0) {
             dispatch(ChatRequest());
             try {
-                await request(USER_CHAT_NOTIFICATION, {chatId: chatId});
+                await request(`${USER_CHAT_NOTIFICATION}/${MARK_AS_READ}`, {method:'POST', body:{chatId: chatId}});
                 dispatch(clearUnread(chatId));
             } catch (err) {
                 dispatch(chatsRequestError())

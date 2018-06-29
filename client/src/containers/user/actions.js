@@ -1,8 +1,9 @@
 import {go} from "../../utils/navigationUtility";
-import {LOGIN, SIGN_UP, USER} from "../../constants/urlConstants";
+import {LOGIN, SIGN_UP, USER, USER_CHAT_NOTIFICATION} from "../../constants/urlConstants";
 import userUtility from "../../utils/userUtility";
 import request from "../../utils/request";
 import {FETCH_USERS_FAILURE, FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS} from "./actionTypes";
+import {incrementUnread} from "../chat/actions";
 
 function fetchUsersSuccess(users){
     return {
@@ -71,6 +72,19 @@ export async function signUp(payload){
     } catch (err){
         logout();
         throw err;
+    }
+}
+
+/**
+ * Fetch all user unread chat notifications
+ * @returns {Function}
+ */
+export function fetchUnreadChatNotifications(){
+    return async dispatch => {
+        try {
+            const unreadNotifications = await request(USER_CHAT_NOTIFICATION);
+            unreadNotifications.forEach(notification => dispatch(incrementUnread(notification.chatId, notification.count)))
+        } catch (err) {}
     }
 }
 

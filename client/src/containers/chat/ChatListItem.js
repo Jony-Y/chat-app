@@ -15,7 +15,7 @@ class ChatListItem extends Component {
             <MenuItem separator onClick={this.handleItemClick} selected={isSelected}>
                 <div className="flexbox-fill flex-space-between">
                     <div className="flex-center-start">{chat.name}</div>
-                    {chat.unreadCount && <Badge value={chat.unreadCount}/>}
+                    {chat.unreadCount > 0 && <Badge value={chat.unreadCount}/>}
                 </div>
             </MenuItem>
         )

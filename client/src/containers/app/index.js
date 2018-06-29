@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {logout, fetchUsers} from '../user/actions';
+import {logout, fetchUsers, fetchUnreadChatNotifications} from '../user/actions';
 import {bindActionCreators} from 'redux';
 import io from '../../utils/Socket';
 import './app.css';
@@ -26,7 +26,7 @@ class AppContainer extends Component {
         super(props);
         this.state = {activeChat: getQueryParams().chat || null};
     }
-    componentDidMount(){
+    async componentDidMount(){
         if(!userUtility.isLoggedIn){
             go('/auth');
         }
@@ -40,7 +40,8 @@ class AppContainer extends Component {
         }
 
         this.props.fetchUsers();
-        this.props.fetchUserChats();
+        await this.props.fetchUserChats();
+        this.props.fetchUnreadChatNotifications();
     }
 
     setActiveChat = (chatID) => {
@@ -89,7 +90,8 @@ const mapDispatchToProps = (dispatch) => ({
    fetchUsers: bindActionCreators(fetchUsers, dispatch),
    fetchUserChats: bindActionCreators(fetchUserChats, dispatch),
    incrementUnread: bindActionCreators(incrementUnread, dispatch),
-   markAllAsRead: bindActionCreators(markAllAsRead, dispatch)
+   markAllAsRead: bindActionCreators(markAllAsRead, dispatch),
+   fetchUnreadChatNotifications:bindActionCreators(fetchUnreadChatNotifications, dispatch)
 
 });
 
