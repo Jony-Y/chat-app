@@ -3,6 +3,7 @@ import {NEW_CHAT_SUCCESS} from "./actionTypes";
 import {CHAT_CLEAR_UNREAD} from "./actionTypes";
 import {CHAT_INCREMENT_UNREAD} from "./actionTypes";
 import { Map } from 'immutable'
+import {CHAT_UPDATED_DATE} from "./actionTypes";
 
 const initialState = {
     isFetching: false,
@@ -32,6 +33,11 @@ export default (state = initialState, action) => {
         case CHAT_INCREMENT_UNREAD:
             let unreadCount = state.chats.get(action.chatId).unreadCount || 0;
             return {...state, chats:state.chats.set(action.chatId, {...state.chats.get(action.chatId), unreadCount: unreadCount+ action.count})};
+
+        case CHAT_UPDATED_DATE:
+            let chat = state.chats.get(action.chatId);
+            let newMap = state.chats.delete(action.chatId);
+            return {...state, chats:newMap.set(action.chatId, {...chat, updatedAt: new Date().toISOString()})};
 
         case CHAT_CLEAR_UNREAD:
             return {...state, chats: state.chats.set(action.chatId, {...state.chats.get(action.chatId), unreadCount: 0})};

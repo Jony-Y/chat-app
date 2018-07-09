@@ -6,7 +6,12 @@ export const saveChat = (payload) => {
 };
 
 export const getAllChats = (userId) => {
-    return Chat.find({participants:`${userId}`}).populate('participants');
+    return Chat.find({participants:`${userId}`}).sort('-updatedAt').populate('participants');
+};
+
+
+export const updateChatTimestamp = (chatId) => {
+    return Chat.findByIdAndUpdate(chatId);
 };
 
 export const getChat = (id) => {

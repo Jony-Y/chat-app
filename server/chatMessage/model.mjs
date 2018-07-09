@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 import BaseSchema from '../utils/schema';
+import {updateChatTimestamp} from "../chat/service";
 const Schema = mongoose.Schema;
-const chatMessage = mongoose.model('ChatMessage', BaseSchema({
+const chatMessage =  BaseSchema({
     body:{
         type:String,
         default:''
@@ -18,7 +19,15 @@ const chatMessage = mongoose.model('ChatMessage', BaseSchema({
         type: Schema.Types.ObjectId, ref: 'User',
         required:true
     }
-}));
+});
 
+chatMessage.post('save', async function(doc, next){
+    try {
+        await updateChatTimestamp(doc.chatId);
+        next();
+    }catch(err){
+        next(err);
+    }
+});
 
-export default chatMessage;
+export default mongoose.model('ChatMessage',chatMessage);

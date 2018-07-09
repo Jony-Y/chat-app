@@ -2,6 +2,7 @@ import * as type from './actionTypes';
 import request from "../../utils/request";
 import {CHAT, MESSAGE} from "../../constants/urlConstants";
 import isEmpty from "lodash/isEmpty";
+import {updateChatTimestamp} from "../chat/actions";
 
 function newMessageRequest() {
     return {
@@ -57,6 +58,7 @@ export function sendChatMessage(chatID, message) {
         dispatch(newMessageRequest());
         try{
             await request(MESSAGE, {method:'POST', body: {chatId:chatID, body:message}});
+            dispatch(updateChatTimestamp(chatID))
         }catch (err) {
             dispatch(newMessageFailure(err));
         }
@@ -73,7 +75,6 @@ export function fetchChatMessages(chatId, page = 0){
                 dispatch(chatMessagesRequest());
             try {
                 const data = await request(`${CHAT}/${chatId}/${MESSAGE}`, {page: page});
-                console.log(data);
                 dispatch(chatMessagesSuccess(chatId, data));
             } catch (err) {
                 dispatch(chatMessagesFailure(err));

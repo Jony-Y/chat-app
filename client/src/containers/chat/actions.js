@@ -64,6 +64,13 @@ export function incrementUnread(chatId, count = 1) {
     }
 }
 
+export function updateChatTimestamp(chatId) {
+    return {
+        type: type.CHAT_UPDATED_DATE,
+        chatId: chatId,
+    }
+}
+
 function clearUnread(chatId) {
     return {
         type: type.CHAT_CLEAR_UNREAD,

@@ -19,8 +19,7 @@ export const notifyChatParticipants = async(message) => {
         outOfRoomParticipants.forEach(async(participant) => {
             if(!io.hasRoom(`${SOCKET_GENERAL_ROOM}:${participant}`)){
                 console.log(`saving unread notification count chat: ${chatId} participant: ${participant}`);
-                const resp = await saveUnreadUserChatNotification(chatId, participant);
-                console.log(resp);
+                await saveUnreadUserChatNotification(chatId, participant);
             }else{
                 io.emitRoom(`${SOCKET_GENERAL_ROOM}:${participant}`, message);
             }

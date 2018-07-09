@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import './chat.css';
 import NewMessageForm from "./NewMessageForm";
-import {chatMessages, chatMessagesPageCount} from "../chatMessage/selectors";
+import {chatMessages, chatMessagesPageCount, isFetchingChatMessages} from "../chatMessage/selectors";
 import {fetchChatMessages, sendChatMessage, newMessageSuccess} from "../chatMessage/actions";
 import ChatMessage from "../chatMessage/ChatMessage";
 import isEmpty from 'lodash/isEmpty';
@@ -15,6 +15,8 @@ import ChatMessageList from "../chatMessage/ChatMessageList";
 import ScrollWatch from "../../utils/ScrollWatch";
 import {markAllAsRead} from "./actions";
 import {hasUnreadMessages} from "./selectors";
+import CircularLoader from "../../components/loader/CircularLoader";
+import {lightGray} from "../../themes/colors";
 class ChatContainer extends Component {
 
     componentDidMount(){
@@ -51,20 +53,21 @@ class ChatContainer extends Component {
         this.scroller.scrollToPreviousPosition();
     };
 
-    focused = () => {
+    handleInputFocused = () => {
         if(this.props.hasUnread) {
             this.props.markAllAsRead(this.props.id);
         }
     };
 
     render(){
-        const {messages, pageCount} = this.props;
+        const {messages, pageCount, isFetching} = this.props;
         return (
             <div className="chat-container flexbox flexbox-column-fill flex-start">
                 <ChatMessageList id="chatMessageList" onFetchNext={this.fetchNextPage} pageCount={pageCount}>
+                    {isFetching && isEmpty(messages) && <CircularLoader size={30} thickness={4} style={{color:lightGray}}/>}
                     {messages.map(message => <ChatMessage key={message.id} isOwner={userUtility.isOwner(message.owner)} message={message}/>)}
                 </ChatMessageList>
-                <NewMessageForm onFocus={this.focused} onSubmit={this.sendMessage}/>
+                <NewMessageForm onFocus={this.handleInputFocused} onSubmit={this.sendMessage}/>
             </div>
         )
     }
@@ -78,7 +81,8 @@ const mapStateToProps = (state, props) => {
     return {
         messages: chatMessages(state, props.id),
         hasUnread: hasUnreadMessages(state, props.id),
-        pageCount: chatMessagesPageCount(state, props.id)
+        pageCount: chatMessagesPageCount(state, props.id),
+        isFetching: isFetchingChatMessages(state)
     }
 };
 const mapDispatchToProps = (dispatch) => ({

@@ -3,7 +3,6 @@ import UserChatNotification from "./model";
 export const saveUnreadUserChatNotification = async(chatId, userId) => {
     try {
         const unreadNotification = await UserChatNotification.findOne({chatId: chatId, userId: userId});
-        console.log(unreadNotification);
         return UserChatNotification.findOneAndUpdate({
             chatId: chatId,
             userId: userId
