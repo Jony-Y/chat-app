@@ -35,9 +35,7 @@ export default (state = initialState, action) => {
             return {...state, chats:state.chats.set(action.chatId, {...state.chats.get(action.chatId), unreadCount: unreadCount+ action.count})};
 
         case CHAT_UPDATED_DATE:
-            let chat = state.chats.get(action.chatId);
-            let newMap = state.chats.delete(action.chatId);
-            return {...state, chats:newMap.set(action.chatId, {...chat, updatedAt: new Date().toISOString()})};
+            return {...state, chats:state.chats.set(action.chatId, {...state.chats.get(action.chatId), updatedAt: new Date().toISOString()})};
 
         case CHAT_CLEAR_UNREAD:
             return {...state, chats: state.chats.set(action.chatId, {...state.chats.get(action.chatId), unreadCount: 0})};
