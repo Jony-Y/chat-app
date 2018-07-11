@@ -2,4 +2,6 @@
 .idea/
 build/
 node_modules/
-.gitignore
+client/node_modules/
+server/node_modules/
+client/src/**/*.css
