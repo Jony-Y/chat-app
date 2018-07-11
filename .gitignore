@@ -1,5 +1,3 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
 build/
-node_modules/
-src/**/*.css
