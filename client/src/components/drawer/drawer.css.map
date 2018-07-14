@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,YAAY;EACV,OAAO,EAAE,IAAI;EACb,KAAK,EAAC,KAAK;EACX,MAAM,EAAC,IAAI;EACX,SAAS,EAAE,MAAM;EACjB,UAAU,EAAE,IAAI",
-"sources": ["drawer.scss"],
-"names": [],
-"file": "drawer.css"
-}
