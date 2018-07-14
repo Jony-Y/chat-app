@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAGI,uDAA0B;EACxB,OAAO,EAAE,IAAI;AAEf,uDAA0B;EACxB,OAAO,EAAE,IAAI;AAGjB,iCAAiB;EACf,KAAK,ECwDJ,OAAO;;ADnDV,sBAAK;EACH,MAAM,EAAC,iBAAc",
+"sources": ["form.scss","../../sass/_variables.scss"],
+"names": [],
+"file": "form.css"
+}

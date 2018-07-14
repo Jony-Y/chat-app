@@ -1,0 +1,27 @@
+@import "../../sass/variables";
+.base-input{
+  &:focus{
+    outline: none !important;
+  }
+  height:45px;
+  border-radius: 5px;
+  border-style: none;
+  padding-left: 15px;
+}
+.base-input.sm{
+  height:36px;
+}
+
+.filter-input{
+  border:1px solid $lighter-gray;
+  background: white;
+  border-radius: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  .form-control {
+    &:focus {
+      border-color: transparent;
+      box-shadow: none
+    }
+  }
+}

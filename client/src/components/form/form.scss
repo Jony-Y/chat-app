@@ -1,0 +1,14 @@
+@import "../../sass/variables";
+.form-validated {
+  .form-control {
+    &:valid~.form-text-helper {
+      display: none;
+    }
+    &:invalid{
+      border:1px solid $red;
+    }
+  }
+  .form-text-helper{
+    color:$red;
+  }
+}

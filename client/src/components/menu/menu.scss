@@ -1,0 +1,11 @@
+@import "../../sass/variables";
+$item-height:48;
+.menu-base{
+  max-height: $item-height * 4.5;
+  width: 200px;
+}
+
+.menu-list-item{
+  border-bottom: 1px solid $lighter-gray !important;
+  height: 30px !important;
+}

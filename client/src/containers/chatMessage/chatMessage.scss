@@ -1,0 +1,57 @@
+@import "../../sass/variables";
+.chat-message{
+  display: flex;
+  flex-flow: column wrap;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 1px 6px, rgba(0, 0, 0, 0.2) 0 1px 4px;
+  border-radius: 10px;
+  padding: 3px 10px;
+  min-width: 100px;
+  width: fit-content;
+  margin:15px 7px;
+  background: $white;
+  word-wrap: break-word;
+  .date{
+    display: flex;
+    justify-content: flex-end;
+    font-size: 9px;
+    color:$light-gray
+  }
+  .body{
+    word-break: break-all;
+  }
+  .user{
+    color:$gray;
+    font-size: 12px;
+  }
+  .message-arrow {
+    position: relative;
+    &:after{
+      position: absolute;
+      content: "";
+      width: 0;
+      height: 0;
+      border-style: solid;
+    }
+  }
+  .message-arrow.received {
+    &:after {
+      border-width: 0 15px 20px 0;
+      border-color: transparent $white transparent transparent;
+      top: -3px;
+      left: -18px;
+    }
+  }
+
+  .message-arrow.sent {
+    &:after {
+      border-width: 0 0 20px 15px;
+      border-color: transparent transparent transparent $lightGreen;
+      top: -3px;
+      right: -18px;
+    }
+  }
+}
+
+.chat-message.sent{
+  background: $lightGreen;
+}
