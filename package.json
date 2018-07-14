@@ -10,6 +10,10 @@
     "start:client":"cd client && npm start",
     "install:server":"cd server && yarn install",
     "install:client":"cd client && yarn install",
+    "add:server":"cd server && yarn add",
+    "add:client":"cd client && yarn add",
+    "remove:server":"cd server && yarn remove",
+    "remove:client":"cd client && yarn remove",
     "start":"npm run start:server & npm run start:client",
     "build":"cd client && npm run build",
     "install":"npm run install:server & npm run install:client"
