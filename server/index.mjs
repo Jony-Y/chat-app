@@ -10,7 +10,7 @@ let app = express();
 
 mongoose.connect(mongoUrl).then(
     () => { console.log('connected to db') },
-    err => { console.log(`error connecting:${err}`) }
+    err => { console.log(`error connecting: ${err}`) }
 );
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -18,7 +18,8 @@ app.use(logger('dev'));
 
 app.use(baseHeader);
 app.use('/api/v1', routes);
-let server = app.listen(port,() => {
+
+const server = app.listen(port,() => {
     console.log(`server is running on ${port} `)
 });
 socket.connect(server);
