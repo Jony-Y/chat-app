@@ -16,7 +16,7 @@
     "remove:client":"cd client && yarn remove",
     "start":"npm run start:server & npm run start:client",
     "build":"cd client && npm run build",
-    "install":"npm run install:server & npm run install:client"
+    "install":"npm run install:server && npm run install:client"
   },
   "author": "Jonathan Yehie",
   "license": "MIT"
