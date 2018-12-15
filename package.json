@@ -2,21 +2,31 @@
   "name": "chat-app",
   "version": "1.0.0",
   "description": "Demo app for whats app like chat application",
-  "keywords": ["MERN Stack", "Chat App", "WhatsApp", "React", "MongoDB", "NodeJs" ,"Redux"],
+  "keywords": [
+    "MERN Stack",
+    "Chat App",
+    "WhatsApp",
+    "React",
+    "MongoDB",
+    "NodeJs",
+    "Redux"
+  ],
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:server":"cd server && npm start",
-    "start:client":"cd client && npm start",
-    "install:server":"cd server && yarn install",
-    "install:client":"cd client && yarn install",
-    "add:server":"cd server && yarn add",
-    "add:client":"cd client && yarn add",
-    "remove:server":"cd server && yarn remove",
-    "remove:client":"cd client && yarn remove",
-    "start":"npm run start:server & npm run start:client",
-    "build":"cd client && npm run build",
-    "install":"npm run install:server && npm run install:client"
+    "storybook": "cd client && start-storybook -p 9001 -c .storybook",
+    "start:server": "cd server && npm start",
+    "start:client": "cd client && npm start",
+    "install:server": "cd server && yarn install",
+    "install:client": "cd client && yarn install",
+    "add:server": "cd server && yarn add",
+    "add:client": "cd client && yarn add",
+    "remove:server": "cd server && yarn remove",
+    "remove:client": "cd client && yarn remove",
+    "start": "npm run start:server & npm run start:client",
+    "build": "cd client && npm run build",
+    "install": "npm run install:server && npm run install:client"
+
   },
   "author": "Jonathan Yehie",
   "license": "MIT"

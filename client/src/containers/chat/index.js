@@ -17,6 +17,7 @@ import {markAllAsRead} from "./actions";
 import {hasUnreadMessages} from "./selectors";
 import CircularLoader from "../../components/loader/CircularLoader";
 import {lightGray} from "../../themes/colors";
+
 class ChatContainer extends Component {
 
     componentDidMount(){
